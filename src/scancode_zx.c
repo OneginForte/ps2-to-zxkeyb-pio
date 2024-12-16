@@ -1,6 +1,6 @@
 #include "ps2x2pico.h"
 
-
+uint8_t mt_matrix[8] = {0x00};// синхронизация матрицы для МТ8816
 uint8_t tab_key[128] = {0x00};// таблица нажатых клавиш
 uint8_t tab_key_old[128] = {0x00};// таблица предыдушего нажатия клавиш
 //static uint8_t ps2bufsize = 0;
@@ -363,13 +363,14 @@ uint8_t table_key_zx_hid[256] =
 
 //------------------------------------------------------------------
 void SetAddr(uint8_t addr) {
-  gpio_put(AX0,bitRead(addr,0));
-  gpio_put(AX1,bitRead(addr,1));
-  gpio_put(AX2,bitRead(addr,2));
-  gpio_put(AX3,bitRead(addr,3));
-  gpio_put(AY0,bitRead(addr,4));
-  gpio_put(AY1,bitRead(addr,5));
-  gpio_put(AY2,bitRead(addr,6));
+  
+    gpio_put(AX0,bitRead(addr,0));
+    gpio_put(AX1,bitRead(addr,1));
+    gpio_put(AX2,bitRead(addr,2));
+    gpio_put(AX3,bitRead(addr,3));
+    gpio_put(AY0,bitRead(addr,4));
+    gpio_put(AY1,bitRead(addr,5));
+    gpio_put(AY2,bitRead(addr,6));
     //      Serial.print("Table: ");
    // Serial.println( addr, BIN );
 }
@@ -493,7 +494,7 @@ void key_off(uint8_t code)// клавиша отпущена
             SetKey(0);//нажатие клавиши
             }
 
-            printf( "Key OFF: 0x%02X  0x%02X 0x%02X \r\n",code,table_key_zx_ps[code][0],table_key_zx_ps[code][0]);
+            printf( "Key OFF: 0x%02X  0x%02X 0x%02X \r\n",code,table_key_zx_ps[code][0],table_key_zx_ps[code][1]);
 }
 
 void keyboard(uint8_t const *report, uint16_t len)

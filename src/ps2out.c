@@ -43,7 +43,7 @@ void ps2out_init(ps2out* this, rx_callback rx) {
   //}
   
   queue_init(&this->qbytes, sizeof(u8), 9);
-  queue_init(&this->qpacks, sizeof(u8) * 9, 16);
+  //queue_init(&this->qpacks, sizeof(u8) * 9, 16);
   
   //this->sm = pio_claim_unused_sm(pio, true);
   //ps2out_program_init(pio, this->sm, ps2out_prog, data_pin);
@@ -68,7 +68,7 @@ void ps2out_task(ps2out* this) {
     }
     
     pack[0] = i;
-    queue_try_add(&this->qpacks, &pack);
+    //queue_try_add(&this->qpacks, &pack);
   }
 
   

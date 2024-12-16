@@ -569,11 +569,17 @@ void kb_init(u8 gpio_in) {
   SetAddr(0x00);
   gpio_put(RSTMT,0);
   gpio_put(CSMT,0);
+  busy_wait_us(1);
   gpio_put(DATMT,0);
+  busy_wait_us(1);
   gpio_put(STBMT,0); //инициализация
+  busy_wait_us(1);
   gpio_put(CSMT,1); //выбор чипа
+  busy_wait_us(1);
   gpio_put(RSTMT,1);
+  busy_wait_us(1);
   gpio_put(RSTMT,0);  //сброс
+  busy_wait_us(1);
   gpio_put(CSMT,0);
 
   queue_init(&kb_out.qbytes, sizeof(u8), 9);
