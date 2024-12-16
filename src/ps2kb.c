@@ -399,8 +399,8 @@ void kb_receive(u8 byte, u8 prev_byte) {
           printf("KBHOSTCMD_RESET_FF\n");
           // We only set defaults, we do not actually reset ourselves.
           kb_set_defaults();
-          kb_send(KB_MSG_ACK_FA);
-          kb_send(KB_MSG_SELFTEST_PASSED_AA);
+          //kb_send(KB_MSG_ACK_FA);
+          //kb_send(KB_MSG_SELFTEST_PASSED_AA);
         return;
 
         case KBHOSTCMD_RESEND_FE:

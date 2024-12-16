@@ -24,17 +24,17 @@ static uint8_t flag_e1;
 const enum zx_key{
     NC=0xFF,
     //      ряд X0
-    SP=0x01, //SPACE
-    SS=0x11, //SYMBOL SHIFT
-    _M=0x21,
-    _N=0x41,
-    _B=0x31,
+    SP=0x00, //SPACE
+    SS=0x10, //SYMBOL SHIFT
+    _M=0x20,
+    _N=0x40,
+    _B=0x30,
     //      ряд X1
-    EN=0x00, // ENTER
-    _L=0x10,
-    _K=0x20,
-    _J=0x40,
-    _H=0x30,
+    EN=0x01, // ENTER
+    _L=0x11,
+    _K=0x21,
+    _J=0x41,
+    _H=0x31,
     //      ряд X2
     _P=0x02,
     _O=0x12,
@@ -408,6 +408,7 @@ bool led_cl=true;
 
 void key_on(uint8_t code) // клавиша нажата
 {
+            if (code>0x84) return;
             //code = code & 0x7f;//???
             if (code==0x58) /*58 Caps Lock  */
                 {
@@ -473,7 +474,7 @@ void key_off(uint8_t code)// клавиша отпущена
                 {
                     
                     SetAddr(table_key_zx_ps[code][3]);// адрес  клавиши модификатора zx CS или SS 
-                    SetKey(1);//нажатие клавиши
+                    SetKey(0);//нажатие клавиши
                     
                 }
                 SetAddr(table_key_zx_ps[code][2]);// адрес клавиши zx 
@@ -489,7 +490,7 @@ void key_off(uint8_t code)// клавиша отпущена
                 
             }
             SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
-            SetKey(1);//нажатие клавиши
+            SetKey(0);//нажатие клавиши
             }
 
             printf( "Key OFF: 0x%02X  0x%02X 0x%02X \r\n",code,table_key_zx_ps[code][0],table_key_zx_ps[code][0]);
