@@ -216,13 +216,14 @@ u8 hid_parse_report_descriptor(hid_report_info_t* report_info_arr, u8 arr_count,
       default: data = 0; sdata = 0;
     }
 
+    u16 offset;
     switch(type) {
       case RI_TYPE_MAIN:
         switch(tag) {
           case RI_MAIN_INPUT:
           case RI_MAIN_OUTPUT:
           case RI_MAIN_FEATURE:
-            u16 offset = (info->num_items == 0) ? 0 : (info->item[info->num_items - 1].bit_offset + info->item[info->num_items - 1].bit_size);
+            offset = (info->num_items == 0) ? 0 : (info->item[info->num_items - 1].bit_offset + info->item[info->num_items - 1].bit_size);
             for(u8 i = 0; i < ri_report_count; i++) {
               if(info->num_items + i < MAX_REPORT_ITEMS) {
                 info->item[info->num_items + i].bit_offset = offset;
@@ -421,10 +422,6 @@ void ms_report_receive(u8 const* report, u16 len) {
 }
 
 void kb_report_receive(u8 modifiers, u8 const* report, u16 len) {
-  
-  
-  
-
   if(modifiers != kb_modifiers) {
     // modifiers have changed
     u8 rbits = modifiers;
@@ -507,24 +504,12 @@ void tuh_hid_mount_cb(u8 dev_addr, u8 instance, u8 const* desc_report, u16 desc_
   u16 vid, pid;
   tuh_vid_pid_get(dev_addr, &vid, &pid);
 
-  char* hidprotostr;
-  switch (hid_if_proto) {
-    case HID_ITF_PROTOCOL_NONE:
-      hidprotostr = "NONE";
-      break;
-    case HID_ITF_PROTOCOL_KEYBOARD:
-      hidprotostr = "KEYBOARD";
-      break;
-    case HID_ITF_PROTOCOL_MOUSE:
-      hidprotostr = "MOUSE";
-      break;
-    default:
-      hidprotostr = "UNKNOWN";
-      break;
-  };
+  char* hidprotostr = "none";
+  if(hid_if_proto == HID_ITF_PROTOCOL_KEYBOARD) hidprotostr = "keyboard";
+  if(hid_if_proto == HID_ITF_PROTOCOL_MOUSE) hidprotostr = "mouse";
 
   printf("\nHID(%d,%d,%s) mounted\n", dev_addr, instance, hidprotostr);
-  printf(" ID: %04x:%04x\n", vid, pid);
+  printf(" VID: %04x  PID: %04x\n", vid, pid);
 
   hid_info[instance].report_count = hid_parse_report_descriptor(hid_info[instance].report_info, MAX_REPORT, desc_report, desc_len);
   printf(" HID has %u reports\n", hid_info[instance].report_count);
@@ -543,22 +528,20 @@ void tuh_hid_mount_cb(u8 dev_addr, u8 instance, u8 const* desc_report, u16 desc_
   }
   printf("\n\n");*/
 
-  if(hid_if_proto == HID_ITF_PROTOCOL_KEYBOARD || hid_if_proto == HID_ITF_PROTOCOL_MOUSE) {
-    if(!tuh_hid_receive_report(dev_addr, instance)) {
-      printf(" ERROR: Could not register for HID(%d,%d,%s)!\n", dev_addr, instance, hidprotostr);
-    } else {
-      printf(" HID(%d,%d,%s) registered for reports\n", dev_addr, instance, hidprotostr);
-      if(hid_if_proto == HID_ITF_PROTOCOL_KEYBOARD) {
-        for(u8 i = 0; i < 8; i++) {
-          if(keyboards[i].dev_addr == 0 && keyboards[i].instance == 0) {
-            keyboards[i].dev_addr = dev_addr;
-            keyboards[i].instance = instance;
-            break;
-          }
+  if(!tuh_hid_receive_report(dev_addr, instance)) {
+    printf(" ERROR: Could not register for HID(%d,%d,%s)!\n", dev_addr, instance, hidprotostr);
+  } else {
+    printf(" HID(%d,%d,%s) registered for reports\n", dev_addr, instance, hidprotostr);
+    if(hid_if_proto == HID_ITF_PROTOCOL_KEYBOARD) {
+      for(u8 i = 0; i < 8; i++) {
+        if(keyboards[i].dev_addr == 0 && keyboards[i].instance == 0) {
+          keyboards[i].dev_addr = dev_addr;
+          keyboards[i].instance = instance;
+          break;
         }
       }
-      board_led_write(1);
     }
+    board_led_write(1);
   }
 }
 
@@ -595,63 +578,63 @@ void tuh_hid_report_received_cb(u8 dev_addr, u8 instance, u8 const* report, u16 
 
   if(!rpt_info) return;
 
-  switch(tuh_hid_interface_protocol(dev_addr, instance)) {
-    case HID_ITF_PROTOCOL_KEYBOARD:
-    //keyboard (report, len);
-      if(tuh_hid_get_protocol(dev_addr, instance) == HID_PROTOCOL_BOOT) {
-        u8 modifiers = report[0];
+  if(tuh_hid_interface_protocol(dev_addr, instance) == HID_ITF_PROTOCOL_MOUSE) {
+
+    if(tuh_hid_get_protocol(dev_addr, instance) == HID_PROTOCOL_BOOT) {
+      ms_send_movement(report[0], report[1], report[2], report[3]);
+
+    } else if(rpt_info->usage_page == HID_USAGE_PAGE_DESKTOP && rpt_info->usage == HID_USAGE_DESKTOP_MOUSE) {
+      ms_setup(rpt_info);
+      ms_report_receive(report, len);
+
+    } else {
+      printf("mouse unknown  usage_page: %02x  usage: %02x\n", rpt_info->usage_page, rpt_info->usage);
+    }
+
+  } else {
+
+    if(tuh_hid_get_protocol(dev_addr, instance) == HID_PROTOCOL_BOOT) {
+      u8 modifiers = report[0];
+      report++; report++;
+      kb_report_receive(modifiers, report, 6);
+
+    } else if(rpt_info->usage_page == HID_USAGE_PAGE_DESKTOP && rpt_info->usage == HID_USAGE_DESKTOP_KEYBOARD) {
+      u8 modifiers = hid_parse_keyboard_modifiers(rpt_info, report, len);
+
+      if(hid_parse_keyboard_is_nkro(rpt_info)) {
+        u8 current_key = 0;
+        u8 newreport[sizeof(kb_keys)] = {0};
+        u8 newindex = 0;
+
+        for(u8 i = 1; i < len && i < 16; i++) {
+          for(u8 j = 0; j < 8; j++) {
+            if(report[i] >> j & 1 && newindex < sizeof(kb_keys)) {
+              newreport[newindex] = current_key;
+              newindex++;
+            }
+            current_key++;
+          }
+        }
+
+        kb_report_receive(modifiers, newreport, sizeof(kb_keys));
+
+      } else if(len == 7) {
+        report++;
+        kb_report_receive(modifiers, report, 6);
+
+      } else if(len == 8 || len == 9) {
         report++; report++;
         kb_report_receive(modifiers, report, 6);
 
-      } else if(rpt_info->usage_page == HID_USAGE_PAGE_DESKTOP && rpt_info->usage == HID_USAGE_DESKTOP_KEYBOARD) {
-
-        u8 modifiers = hid_parse_keyboard_modifiers(rpt_info, report, len);
-
-        if(hid_parse_keyboard_is_nkro(rpt_info)) {
-          u8 current_key = 0;
-          u8 newreport[sizeof(kb_keys)] = {0};
-          u8 newindex = 0;
-
-          for(u8 i = 1; i < len && i < 16; i++) {
-            for(u8 j = 0; j < 8; j++) {
-              if(report[i] >> j & 1 && newindex < sizeof(kb_keys)) {
-                newreport[newindex] = current_key;
-                newindex++;
-              }
-              current_key++;
-            }
-          }
-
-          kb_report_receive(modifiers, newreport, sizeof(kb_keys));
-
-        } else if(len == 7) {
-          report++;
-          kb_report_receive(modifiers, report, 6);
-
-        } else if(len == 8 || len == 9) {
-          report++; report++;
-          kb_report_receive(modifiers, report, 6);
-
-        } else {
-          printf("keyboard unknown  len: %02x\n", len);
-        }
-
       } else {
-        printf("keyboard unknown  usage_page: %02x  usage: %02x\n", rpt_info->usage_page, rpt_info->usage);
+        printf("keyboard unknown  len: %02x\n", len);
       }
-      tuh_hid_receive_report(dev_addr, instance);
-    break;
 
-    case HID_ITF_PROTOCOL_MOUSE:
-      if(tuh_hid_get_protocol(dev_addr, instance) == HID_PROTOCOL_BOOT) {
-        ms_send_movement(report[0], report[1], report[2], report[3]);
-      } else if(rpt_info->usage_page == HID_USAGE_PAGE_DESKTOP && rpt_info->usage == HID_USAGE_DESKTOP_MOUSE) {
-        ms_setup(rpt_info);
-        ms_report_receive(report, len);
-      } else {
-        printf("mouse unknown  usage_page: %02x  usage: %02x\n", rpt_info->usage_page, rpt_info->usage);
-      }
-      tuh_hid_receive_report(dev_addr, instance);
-    break;
+    } else {
+      printf("keyboard unknown  usage_page: %02x  usage: %02x\n", rpt_info->usage_page, rpt_info->usage);
+    }
+
   }
+
+  tuh_hid_receive_report(dev_addr, instance);
 }

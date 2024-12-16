@@ -4,3 +4,4 @@
 * billgilbert7000 https://github.com/billgilbert7000/usb_to_zx_spectrum
 * MikhaelKaa https://github.com/MikhaelKaa/usb2spectrum
 
+Для корректной работы TinyUSB необходим патч из корня. 
