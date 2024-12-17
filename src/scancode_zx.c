@@ -21,57 +21,6 @@ static uint8_t flag_e1;
 // X4 KA8 CS   Z   X   C   V  B   N   M   SS  SP  KA15 X0
 
 
-const enum zx_key{
-    NC=0xFF,
-    //      ряд X0
-    SP=0x00, //SPACE
-    SS=0x10, //SYMBOL SHIFT
-    _M=0x20,
-    _N=0x40,
-    _B=0x30,
-    //      ряд X1
-    EN=0x01, // ENTER
-    _L=0x11,
-    _K=0x21,
-    _J=0x41,
-    _H=0x31,
-    //      ряд X2
-    _P=0x02,
-    _O=0x12,
-    _I=0x22,
-    _U=0x42,
-    _Y=0x32,
-    //      ряд X3
-    _0=0x03,
-    _9=0x13,
-    _8=0x23,
-    _7=0x43,
-    _6=0x33,
-    //      ряд X4    
-    CS=0x04, //CAPS SHIFT
-    _Z=0x14,
-    _X=0x24,
-    _C=0x44,
-    _V=0x34,
-    //      ряд X5
-    _A=0x05,
-    _S=0x15,
-    _D=0x25,
-    _F=0x45,
-    _G=0x35,   
-    //      ряд X6
-    _Q=0x06,
-    _W=0x16,
-    _E=0x26,
-    _R=0x46,
-    _T=0x36,
-    //      ряд X7
-    _1=0x07,
-    _2=0x17,
-    _3=0x27,
-    _4=0x47,
-    _5=0x37
-} zx_key_pent;
 
 const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {
@@ -218,7 +167,7 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 // 0x70 - 0x73			/* клавиши ALT CTRL SHIFT  специально для ZX  */
 
 
-uint8_t table_key_zx_hid[256] = 
+const uint8_t __in_flash() table_key_zx_hid[256] = 
  {
   NC, NC,/*00 Reserved*/
   NC, NC,/*01 Keyboard ErrorRollOver*/
@@ -356,8 +305,6 @@ uint8_t table_key_zx_hid[256] =
   NC, NC,/*7E*/
   NC, NC,/*7F*/   
  };
-
-
 
 
 

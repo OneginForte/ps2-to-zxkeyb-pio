@@ -84,9 +84,6 @@ int main() {
   //nespad_begin(clock_get_hz(clk_sys) / 1000, NES_GPIO_CLK, NES_GPIO_DATA, NES_GPIO_LAT);
   //init_74hc595();
 
-
-
-
   kb_init(KBIN); //KBIN);
   //ms_init(MSIN); //MSIN);
 

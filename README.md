@@ -8,24 +8,26 @@
 
 ### Для корректной работы TinyUSB необходим [патч](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/main/tinyusb-0.17.0-dualusb.patch) из корня. 
 
-### Выводы PICO для работы с MT8816:
+### Используемые выводы PICO 
 
-- `AX0 4`
-- `AX1 5`
-- `AX2 6`
-- `AX3 7`
-- `AY0 8`
-- `AY1 9`
-- `AY2 10`
-- `STBMT 11`
-- `CSMT  12`
-- `DATMT 14`
+Для работы с MT8816:
+- AX0 `GPIO4`
+- AX1 `GPIO5`
+- AX2 `GPIO6`
+- AX3 `GPIO7`
+- AY0 `GPIO8`
+- AY1 `GPIO9`
+- AY2 `GPIO10`
+- STBMT `GPIO11`
+- CSMT  `GPIO12`
+- RSTMT `GPIO13`
+- DATMT `GPIO14`
 
-Выводы порта: 
+Для интерфейса PS/2: 
 -  PS/2 DATA `GPIO3` 
--  CLOCK - `GPIO4`
+-  CLOCK  `GPIO4`
 
-Выводы порта PIO-USB: 
+Для порта PIO-USB: 
 - D+ `GPIO21` 
 - D- `GPIO22`
 

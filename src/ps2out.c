@@ -30,7 +30,6 @@ s8 ps2out_prog = -1;
 u8 ps2out_locked = 0;
 
 
-
 void ps2out_init(ps2out* this, rx_callback rx) {
   //if(ps2out_prog == -1) {
   //  ps2out_prog = pio_add_program(pio, &ps2out_program);
