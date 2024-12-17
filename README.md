@@ -24,8 +24,8 @@
 - DATMT `GPIO14`
 
 Для интерфейса PS/2: 
--  PS/2 DATA `GPIO3` 
--  CLOCK  `GPIO4`
+-  PS/2 DATA `GPIO2` 
+-  CLOCK  `GPIO3`
 
 Для порта PIO-USB: 
 - D+ `GPIO21` 
