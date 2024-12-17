@@ -12,7 +12,7 @@ static uint8_t flag_e1;
 //----------------------------------------------------------
 // Keytable   AX0 AX1 AX2 AX3 AY0 AY1 AY2
 //         
-// delta   
+//   
 // pent   Y0  Y1  Y2  Y4  Y3  Y3  Y4  Y2  Y1  Y0
 //        D0  D1  D2  D3  D4  D4  D3  D2  D1  D0
 // X7 KA11 1   2   3   4   5  6   7   8   9   0   KA12 X3
