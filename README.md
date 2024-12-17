@@ -36,3 +36,6 @@
 - UART_RX_PIN `GPIO17`
 
 
+Соединение выводов MT8816 для Пентагон 128
+На порту Y выводы с Dx соединяются 1 к 1, как на изображении. Ремап сделан программно.
+![Connection](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/main/doc/conn.PNG)  
