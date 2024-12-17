@@ -29,13 +29,7 @@
 s8 ps2out_prog = -1;
 u8 ps2out_locked = 0;
 
-u32 ps2_frame(u8 byte) {
-  bool parity = 1;
-  for(u8 i = 0; i < 8; i++) {
-    parity = parity ^ (byte >> i & 1);
-  }
-  return ((1 << 10) | (parity << 9) | (byte << 1)) ^ 0x7ff;
-}
+
 
 void ps2out_init(ps2out* this, rx_callback rx) {
   //if(ps2out_prog == -1) {

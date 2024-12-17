@@ -550,7 +550,7 @@ bool kb_task() {
   //#ifdef KBIN
   ps2in_task(&kb_in, &kb_out);
   //#endif
-  return kb_enabled && !kb_out.busy;// TODO: return value can probably be void
+  return kb_enabled;// TODO: return value can probably be void
 }
 
 void kb_init(u8 gpio_in) {

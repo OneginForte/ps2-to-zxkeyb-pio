@@ -115,6 +115,14 @@ void ps2in_task(ps2in* this, ps2out* out) {
   }
 }
 
+u32 ps2_frame(u8 byte) {
+  bool parity = 1;
+  for(u8 i = 0; i < 8; i++) {
+    parity = parity ^ (byte >> i & 1);
+  }
+  return ((1 << 10) | (parity << 9) | (byte << 1)) ^ 0x7ff;
+}
+
 void ps2in_reset(ps2in* this) {
   this->state = 1;
   printf("** ps2in reset sm %02x\n", this->sm);

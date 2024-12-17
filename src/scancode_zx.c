@@ -409,7 +409,7 @@ bool led_cl=true;
 
 void key_on(uint8_t code) // клавиша нажата
 {
-            if (code>0x84) return;
+            
             //code = code & 0x7f;//???
             if (code==0x58) /*58 Caps Lock  */
                 {
@@ -533,7 +533,7 @@ void keyboard_task(ps2out* this)
 {
     uint8_t i = 0;
     uint8_t byte;
-    uint8_t pack[9];
+    
   
     if(!queue_is_empty(&this->qbytes)) {
         while(i < 9 && queue_try_remove(&this->qbytes, &byte)) {
@@ -560,7 +560,8 @@ void keyboard_task(ps2out* this)
 			break;
 
 		default:
-			if (flag_f0) {
+			if (temp>0x84) break;;
+            if (flag_f0) {
 				key_off(temp);
 				flag_f0 = false;
 				flag_e0 = false;
