@@ -318,6 +318,7 @@ void SetAddr(uint8_t addr) {
     gpio_put(AY0,bitRead(addr,4));
     gpio_put(AY1,bitRead(addr,5));
     gpio_put(AY2,bitRead(addr,6));
+    busy_wait_us(1);
     //      Serial.print("Table: ");
    // Serial.println( addr, BIN );
 }
