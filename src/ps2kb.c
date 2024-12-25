@@ -577,10 +577,11 @@ void kb_init(u8 gpio_in) {
   gpio_put(CSMT,1); //выбор чипа
   busy_wait_us(1);
   gpio_put(RSTMT,1);
-  busy_wait_us(1);
+  busy_wait_us(2);
   gpio_put(RSTMT,0);  //сброс
   busy_wait_us(1);
-  gpio_put(CSMT,0);
+  //gpio_put(CSMT,0);
+  //gpio_put(CSMT, 1); //выбор чипа
 
   queue_init(&kb_out.qbytes, sizeof(u8), 9);
   queue_init(&kb_out.qpacks, sizeof(u8) * 9, 16);

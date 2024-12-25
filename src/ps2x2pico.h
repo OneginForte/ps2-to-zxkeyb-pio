@@ -152,6 +152,7 @@ typedef struct {
   PIO pio;
   uint sm;
   u8 state;
+  u8 last_tx;
   u8 byte;
 } ps2in;
 

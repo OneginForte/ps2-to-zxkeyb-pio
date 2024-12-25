@@ -38,6 +38,9 @@ void core1_main() {
   sleep_ms(10);
   tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT);
   tuh_init(0);
+
+  //pio_usb_host_add_port(21, PIO_USB_PINOUT_DPDM);
+
   // Use tuh_configure() to pass pio configuration to the host stack
   // Note: tuh_configure() must be called before
   pio_usb_configuration_t pio_cfg = PIO_USB_DEFAULT_CONFIG;
@@ -55,40 +58,29 @@ void core1_main() {
 
 int main() {
   sleep_ms(10);
-  set_sys_clock_khz(120000, true);
+  set_sys_clock_khz(240000, true);
   board_init();
   stdio_init_all();
+  
   printf("\n%s-%s\n", PICO_PROGRAM_NAME, PICO_PROGRAM_VERSION_STRING);
   
-  //gpio_init(LVOUT);
-  //gpio_init(LVIN);
-  //gpio_set_dir(LVOUT, GPIO_OUT);
-  //gpio_set_dir(LVIN, GPIO_OUT);
-  //gpio_put(LVOUT, 1);
-  //gpio_put(LVIN, 1);
-
-  // all USB task run in core1
+   // all USB task run in core1
   multicore_reset_core1(); 
   multicore_launch_core1(core1_main);
 
-  //pio_usb_configuration_t pio_cfg = PIO_USB_DEFAULT_CONFIG;
-  //pio_cfg.pin_dp = 2;
-  //tuh_configure(1, TUH_CFGID_RPI_PIO_USB_CONFIGURATION, &pio_cfg);
-  //tuh_init(1);
-
-  //pio_usb_host_add_port(28, PIO_USB_PINOUT_DPDM);
   gpio_init(LEDPIN);
   gpio_set_dir(LEDPIN, GPIO_OUT);
   
   //memset(ps2buffer, 0, KBD_BUFFER_SIZE);
   //nespad_begin(clock_get_hz(clk_sys) / 1000, NES_GPIO_CLK, NES_GPIO_DATA, NES_GPIO_LAT);
+  
   //init_74hc595();
 
   kb_init(KBIN); //KBIN);
   //ms_init(MSIN); //MSIN);
 
   while(1) {
-    //tuh_task();
+    
     kb_task();
     //ms_task();
   }

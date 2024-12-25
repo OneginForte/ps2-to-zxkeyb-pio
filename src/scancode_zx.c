@@ -131,22 +131,22 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {NC, NC, NC, NC},
 {_1, NC, NC, NC},/*59 Keypad 1 */   //E0 69,NC, NC,/*4D End */
 {NC, NC, NC, NC},
-{_4, NC,_5, CS},/*5C Keypad 4 */   //E0 6b,_5, CS,/*50 LeftArrow CS+5*
+{_4, NC, _5, CS},/*5C Keypad 4 */   //E0 6b,_5, CS,/*50 LeftArrow CS+5*
 {_7, NC, NC, NC},/*5F Keypad 7 */  //E0 6c,NC, NC,/*4A Home */
 {NC, NC, NC, NC},
 {NC, NC, NC, NC},
 {NC, NC, NC, NC},
 {_0, NC, NC, NC},/*62 Keypad 0 */  //E0 70,NC, NC,/*49 Insert */
 {NC, NC, NC, NC},/*63 Keypad Del.*///E0 71,NC, NC,/*4C Del */
-{_2, NC, _6, CS,},/*5A Keypad 2 */          //E0 72,_6, CS,/*51 DownArrow  CS+6*/
+{_2, NC, _6, CS},/*5A Keypad 2 */          //E0 72,_6, CS,/*51 DownArrow  CS+6*/
 {_5, NC, NC, NC},/*5D Keypad 5 */  
-{_6, NC, _8, CS,},/*5E Keypad 6 */  //E0 74,_8, CS,/*4F RightArrow CS+8*/
-{_8, NC, _7, CS,},/*60 Keypad 8 */  //E0 75,_7, CS,/*52 UpArrow CS+7*/
+{_6, NC, _8, CS},/*5E Keypad 6 */  //E0 74,_8, CS,/*4F RightArrow CS+8*/
+{_8, NC, _7, CS},/*60 Keypad 8 */  //E0 75,_7, CS,/*52 UpArrow CS+7*/
 {SP, CS, NC, NC},/*29 Escape/ Break CS+Space*/
 {NC, NC, NC, NC},/*53 Keypad Num Lock and Clear*/
 {NC, NC, NC, NC},/*44 F11 */
 {_K, SS, NC, NC},/*57 Keypad + */ 
-{_3, NC, _4, CS,},/*5B Keypad 3 */  //E0 7a,_4, CS,/*4E PageDown CS+4 Inv Video*/
+{_3, NC, _4, CS},/*5B Keypad 3 */  //E0 7a,_4, CS,/*4E PageDown CS+4 Inv Video*/
 {_I, SS, NC, NC},/*56 Keypad - */
 {NC, NC ,_9, CS},/*55 Keypad * */   //E0 7c,_9, CS,/*46 PrintScreen Graph Mode CS+9*/
 {_9, NC, _3, CS},/*61 Keypad 9 */   //E0 7D,_3, CS,/*4B PageUp CS+3 True Video*/    
@@ -323,13 +323,15 @@ void SetAddr(uint8_t addr) {
 }
 
 void SetKey(bool data){
-   gpio_put(CSMT, 1); //выбор чипа
+   //gpio_put(CSMT, 1); //выбор чипа
+   //busy_wait_us(1);
    gpio_put(STBMT, 1); //строб on
-   busy_wait_us(10);
+   busy_wait_us(2);
    gpio_put(DATMT, data); //данные
-   busy_wait_us(10);
+   busy_wait_us(2);
    gpio_put(STBMT, 0); //строб off    
-   gpio_put(CSMT, 0);   
+   busy_wait_us(2);
+   //gpio_put(CSMT, 0);   
 }
 
 
@@ -358,6 +360,7 @@ void key_on(uint8_t code) // клавиша нажата
 {
             
             //code = code & 0x7f;//???
+            
             if (code==0x58) /*58 Caps Lock  */
                 {
                     if (led_cl) {
@@ -375,9 +378,9 @@ void key_on(uint8_t code) // клавиша нажата
             gpio_put(LEDPIN, 1);//led
             //ws2812_set_rgb(0, 1, 0);
 
-            //code = code<<1; // умножение на 2
+            
             if (flag_e0==true){
-                if (table_key_zx_ps[code][2]==NC) return;// если на код нет нажатия клавиши ZX
+                if ((table_key_zx_ps[code][2]==NC)||((tab_key[code]&0xf0)==0xf0)) return;// если на код нет нажатия клавиши ZX или уже нажата
                 if (table_key_zx_ps[code][3]!=NC) //если есть клавиша модификатор
                 {
                     
@@ -385,11 +388,13 @@ void key_on(uint8_t code) // клавиша нажата
                     SetKey(1);//нажатие клавиши
                     
                 }
+                tab_key[code]=(tab_key[code]&0x0f)|0xf0;
                 SetAddr(table_key_zx_ps[code][2]);// адрес клавиши zx 
                 SetKey(1);//нажатие клавиши
+                printf( "Key E0 ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
             }
             else { 
-            if (table_key_zx_ps[code][0]==NC) return;// если на код нет нажатия клавиши ZX
+            if ((table_key_zx_ps[code][0]==NC)||((tab_key[code]&0x0f)==0x0f)) return;// если на код нет нажатия клавиши ZX или уже нажата
             if (table_key_zx_ps[code][1]!=NC) //если есть клавиша модификатор
             {
                 
@@ -397,12 +402,14 @@ void key_on(uint8_t code) // клавиша нажата
                 SetKey(1);//нажатие клавиши
                 
             }
+            tab_key[code]=(tab_key[code]&0xf0)|0x0f;
             SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
             SetKey(1);//нажатие клавиши
+            printf( "Key ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
             }
 
               
-            printf( "Key ON: 0x%02X  0x%02X 0x%02X \r\n",code,table_key_zx_ps[code][0],table_key_zx_ps[code][1]);
+            
               
                           
              
@@ -414,8 +421,6 @@ void key_off(uint8_t code)// клавиша отпущена
             gpio_put(LEDPIN, 0);//led
             //ws2812_set_rgb(0, 0, 1); 
 
-            //code = code<<1; // умножение на 2
-            
             if (flag_e0==true){
                 if (table_key_zx_ps[code][2]==NC) return;// если на код нет нажатия клавиши ZX
                 if (table_key_zx_ps[code][3]!=NC) //если есть клавиша модификатор
@@ -425,11 +430,13 @@ void key_off(uint8_t code)// клавиша отпущена
                     SetKey(0);//нажатие клавиши
                     
                 }
+                tab_key[code]=(tab_key[code]&0x0f);
                 SetAddr(table_key_zx_ps[code][2]);// адрес клавиши zx 
                 SetKey(0);//нажатие клавиши
+                printf( "Key E0 OFF: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
             }
             else { 
-            if (table_key_zx_ps[code][0]==NC) return;// если на код нет нажатия клавиши ZX
+            if (table_key_zx_ps[code][0]==NC)return;// если на код нет нажатия клавиши ZX
             if (table_key_zx_ps[code][1]!=NC) //если есть клавиша модификатор
             {
                 
@@ -437,11 +444,13 @@ void key_off(uint8_t code)// клавиша отпущена
                 SetKey(0);//нажатие клавиши
                 
             }
+            tab_key[code]=(tab_key[code]&0xf0);
             SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
             SetKey(0);//нажатие клавиши
+            printf( "Key OFF: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
             }
 
-            printf( "Key OFF: 0x%02X  0x%02X 0x%02X \r\n",code,table_key_zx_ps[code][0],table_key_zx_ps[code][1]);
+            
 }
 
 void keyboard(uint8_t const *report, uint16_t len)
@@ -507,7 +516,7 @@ void keyboard_task(ps2out* this)
 			break;
 
 		default:
-			if (temp>0x84) break;;
+			if (temp>0x84) break;
             if (flag_f0) {
 				key_off(temp);
 				flag_f0 = false;

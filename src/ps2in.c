@@ -58,10 +58,10 @@ void ps2in_task(ps2in* this, ps2out* out) {
     u8 byte = fifo;
     printf("** ps2in  sm %02x  byte %02x\n", this->sm, byte);
     
-    //if((fifo & 0xff) == 0xfe) {
-    //  pio_sm_put(this->pio, this->sm, ps2_frame(this->last_tx));
-    //  return;
-    //}
+    if((fifo & 0xff) == 0xfe) {
+      pio_sm_put(this->pio, this->sm, ps2_frame(this->last_tx));
+      return;
+    }
     
     if(byte == 0xaa && this->state) {
       this->state = this->sm ? 2 : 10;
