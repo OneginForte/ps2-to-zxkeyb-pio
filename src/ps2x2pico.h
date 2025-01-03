@@ -161,6 +161,9 @@ void ps2in_task(ps2in* this, ps2out* out);
 void ps2in_reset(ps2in* this);
 void ps2in_set(ps2in* this, u8 command, u8 byte);
 
+#define PS2_LED_SCROLL_LOCK 1
+#define PS2_LED_NUM_LOCK    2
+#define PS2_LED_CAPS_LOCK   4
 
 #define KB_EXT_PFX_E0 0xe0 // This is the extended code prefix used in sets 1 and 2
 #define KB_BREAK_2_3 0xf0 // The prefix 0xf0 is the break code prefex in sets 2 and 3 (is send when key is released)

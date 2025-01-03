@@ -359,22 +359,6 @@ bool led_cl=true;
 
 void key_on(uint8_t code) // клавиша нажата
 {
-            
-            //code = code & 0x7f;//???
-            
-            if (code==0x58) /*58 Caps Lock  */
-                {
-                    if (led_cl) {
-                        kb_set_leds(led_cl);
-                    }
-                    else {
-                        led_cl = !led_cl; // тригер  Caps lock
-                        kb_set_leds(led_cl);
-                    }
-                    
-                }
-            else
-                kb_set_leds(0);// 0. Num lock 1.  Caps lock 2.  Scroll
 
             gpio_put(LEDPIN, 1);//led
             //ws2812_set_rgb(0, 1, 0);
@@ -518,6 +502,21 @@ void keyboard_task(ps2out* this)
 
 		default:
 			if (temp>0x84) break;
+       
+            //code = code & 0x7f;//???
+            
+            if ((temp==0x58)&&(flag_f0!=true)) /*58 Caps Lock  */
+                {
+                    if (led_cl) {
+                        kb_set_leds(PS2_LED_SCROLL_LOCK);
+                    }
+                    else {
+                        led_cl = !led_cl; // тригер  Caps lock
+                        kb_set_leds(PS2_LED_SCROLL_LOCK);
+                    }
+                
+                }
+            
             if (flag_f0) {
 				key_off(temp);
 				flag_f0 = false;

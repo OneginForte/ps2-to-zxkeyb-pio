@@ -88,6 +88,8 @@ u8 scs3keymodemap[HOST_CMD_MIN];
 
 u8 const led2ps2[] = { 0, 4, 1, 5, 2, 6, 3, 7 };
 
+
+
 u32 const repeats[] = {
   33333, 37453, 41667, 45872, 48309, 54054, 58480, 62500,
   66667, 75188, 83333, 91743, 100000, 108696, 116279, 125000,
@@ -134,9 +136,9 @@ void kb_send_sc_list(const u8 *list) {
 }
 
 void kb_set_leds(u8 byte) {
+  
   if(byte > 7) byte = 0;
   tuh_kb_set_leds(led2ps2[byte]);
-  
   ps2in_set(&kb_in, 0xed, byte);
   
 }
