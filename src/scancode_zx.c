@@ -499,12 +499,11 @@ void keyboard_task(ps2out* this)
 		case 0xE1:
 			flag_e1 = 2;
 			break;
+            //Add send macro void kb_send_sc_list(const u8 *list)
 
 		default:
 			if (temp>0x84) break;
-       
-            //code = code & 0x7f;//???
-            
+
             if ((temp==0x58)&&(flag_f0!=true)) /*58 Caps Lock  */
                 {
                     if (led_cl) {
