@@ -28,7 +28,7 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {NC, NC, NC, NC},/*42 F9 */
 {NC, NC, NC, NC},
 {NC, NC, NC, NC},/*3E F5*/
-{NC, NC, NC, NC},/*3C F3*/
+{_3, CS, NC, NC},/*3C F3*/
 {NC, NC, NC, NC},/*3A F1*/
 {NC, NC, NC, NC},/*3B F2*/
 {NC, NC, NC, NC},/*45 F12 */
@@ -36,9 +36,9 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {NC, NC, NC, NC},/*43 F10 */
 {NC, NC, NC, NC},/*41 F8 */
 {NC, NC, NC, NC},/*3F F6*/
-{NC, NC, NC, NC},/*3D F4*/
-{_1, CS, NC, NC},/*2B Tab / Edit CS+1*/
-{NC, NC, NC, NC},/*35 Keyboard Grave Accent and Tilde*/  // ` GRAVE
+{_4, CS, NC, NC},/*3D F4*/
+{SS, CS, NC, NC},/*2B (0D)  Tab CS+SS*/
+{_1, CS, NC, NC},/*35 (0E) Keyboard Grave Accent and Tilde  / Edit CS+1 */  // ` GRAVE
 {NC, NC, NC, NC},/*67 Keypad =*/
 {NC, NC, NC, NC},/*69 F14*/
 {NC, NC, NC, NC},/*Left ALt*/
@@ -65,9 +65,9 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {_3, NC, NC, NC},/*20 3*/
 {NC, NC, NC, NC},
 {NC, NC, NC, NC},/*6C F17*/
-{SP, NC, NC, NC},/*2C Space*/
-{_V, NC, NC, NC},/*19 V*/
-{_F, NC, NC, NC},/*09 F*/
+{SP, NC, NC, NC},/*2C (29) Space*/
+{_V, NC, NC, NC},/*19 (2A) V*/
+{_F, NC, NC, NC},/*09 (2B) F*/
 {_T, NC, NC, NC},/*17 T*/
 {_R, NC, NC, NC},/*15 R*/
 {_5, NC, NC, NC},/*22 5*/
@@ -89,7 +89,7 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {_8, NC, NC, NC},/*25 8*/
 {NC, NC, NC, NC},
 {NC, NC, NC, NC},/*6F F20*/ 
-{_M, SS, NC, NC},/*36 , SS+M*/ // ,	
+{_N, SS, NC, NC},/*36 . SS+N   , SS+M*/ // .	
 {_K, NC, NC, NC},/*0E K*/
 {_I, NC, NC, NC},/*0C I*/
 {_O, NC, NC, NC},/*12 O*/
@@ -97,12 +97,12 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {_9, NC, NC, NC},/*26 9*/
 {NC, NC, NC, NC},
 {SS, CS, NC, NC},/*70 F21 ALT   Ext.Mode SS+CS  */
-{_N, SS, NC, NC},/*37 . SS+N*/ // .
+{_M, SS, NC, NC},/*37 , SS+M  . SS+N*/ // ,
 {_C, SS, _V, SS},/*38 ? SS+C*/ // /	/*54 Keypad / SS+V*/
 {_L, NC, NC, NC},/*0F L*/
-{_O, SS, NC, NC},/*33 ; SS+O*/ // ;
+{_Z, SS, NC, NC},/*33 (4C) : SS+Z ; SS+O*/ // :
 {_P, NC, NC, NC},/*13 P*/
-{_J, SS, NC, NC},/*2D -SS+J*/
+{_J, SS, NC, NC},/*2D - SS+J*/
 {NC, NC, NC, NC},
 {CS, NC, NC, NC},/*71 F22 CTRL  / CS ZX  */ 
 {NC, NC, NC, NC},
@@ -114,7 +114,7 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {SS, NC, NC, NC},/*72 F23 SHIFT / SS ZX  */
 {_2, CS, NC, NC},/*39 Caps Lock  CS+2*/ // CAPS
 {CS, NC, NC, NC},/*Casp Shift*/
-{EN, NC, EN, NC},/*28 Enter*/      //E0 5a,EN, NC,/*58 Keypad Enter */
+{EN, NC, EN, NC},/*28(5a) Enter*/      //E0 5a,EN, NC,/*58 Keypad Enter */
 {_L, SS, NC, NC},/*30 SS+L*/ // ]	
 {NC, NC, NC, NC},
 {NC, NC, NC, NC},/*31 \*/ // BACKSLASH	5d,NC, NC,/*32 `*/ // EUROPE_1
@@ -166,7 +166,61 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 // 0x60 - 0x6f			
 // 0x70 - 0x73			/* клавиши ALT CTRL SHIFT  специально для ZX  */
 
+/*
+KEY 	MAKE 	BREAK 	    KEY 	MAKE 	BREAK
+A 	    1C 	    F0,1C 	    R ALT 	E0,11 	E0,F0,11
+B 	    32 	    F0,32 	    APPS 	E0,2F 	E0,F0,2F
+C 	    21 	    F0,21 	    ENTER 	5A 	    F0,5A
+D 	    23 	    0,23 	    ESC 	76 	    F0,76
+E 	    24 	    F0,24 	    F1 	    05 	    F0,05
+F 	    2B 	    F0,2B 	    F2 	    06 	    F0,06
+G 	    34 	    F0,34 	    F3 	    04 	    F0,04
+H 	    33 	    F0,33 	    F4 	    0C 	    F0,0C
+I 	    43 	    F0,43 	    F5 	    03 	    F0,03
+J 	    3B 	    F0,3B 	    F6 	    0B 	    F0,0B
+K 	    42 	    F0,42 	    F7 	    83 	    F0,83
+L 	    4B 	    F0,4B 	    F8 	    0A 	    F0,0A
+M 	    3A 	    F0,3A 	    F9 	    01 	    F0,01
+N 	    31 	    F0,31 	    F10 	09 	    F0,09
+O 	    44 	    F0,44 	    F11 	78 	    F0,78
+P 	    4D 	    F0,4D 	    F12 	07 	    F0,07
+Q 	    15 	    F0,15 	    SCROLL	7E 	    F0,7E
+R 	    2D 	    F0,2D 	    [ 	    54 	    FO,54
+S 	    1B 	    F0,1B 	    INSERT	E0,70 	E0,F0,70
+T 	    2C 	    F0,2C 	    HOME 	E0,6C 	E0,F0,6C
+U 	    3C 	    F0,3C 	    PG UP 	E0,7D 	E0,F0,7D
+V 	    2A 	    F0,2A 	    DELETE	E0,71 	E0,F0,71
+W 	    1D 	    F0,1D 	    END 	E0,69 	E0,F0,69
+X 	    22 	    F0,22 	    PG DN 	E0,7A 	E0,F0,7A
+Y 	    35 	    F0,35 	    UP 	    E0,75 	E0,F0,75
+Z 	    1A 	    F0,1A 	    LEFT 	E0,6B 	E0,F0,6B
+0 	    45 	    F0,45 	    DOWN 	E0,72 	E0,F0,72
+1 	    16 	    F0,16 	    RIGHT 	E0,74 	E0,F0,74
+2 	    1E 	    F0,1E 	    NUM 	77 	    F0,77
+3 	    26 	    F0,26 	    KP / 	E0,4A 	E0,F0,4A
+4 	    25 	    F0,25 	    KP * 	7C 	    F0,7C
+5 	    2E 	    F0,2E 	    KP - 	7B 	    F0,7B
+6 	    36 	    F0,36 	    KP + 	79 	    F0,79
+7 	    3D 	    F0,3D 	    KP EN 	E0,5A 	E0,F0,5A
+8 	    3E 	    F0,3E 	    KP . 	71 	    F0,71
+9 	    46 	    F0,46 	    KP 0 	70 	    F0,70
+` 	    0E 	    F0,0E 	    KP 1 	69 	    F0,69
+- 	    4E 	    F0,4E 	    KP 2 	72 	    F0,72
+= 	    55 	    FO,55 	    KP 3 	7A 	    F0,7A
+\ 	    5D 	    F0,5D 	    KP 4 	6B 	    F0,6B
+BKSP 	66 	    F0,66 	    KP 5 	73 	    F0,73
+SPACE 	29 	    F0,29 	    KP 6 	74 	    F0,74
+TAB 	0D 	    F0,0D 	    KP 7 	6C  	F0,6C
+CAPS 	58 	    F0,58 	    KP 8 	75 	    F0,75
+L SHFT	12 	    FO,12 	    KP 9 	7D 	    F0,7D
+L CTRL	14 	    FO,14 	    ] 	    5B 	    F0,5B
+L GUI 	E0,1F 	E0,F0,1F	; 	    4C 	    F0,4C
+L ALT 	11 	    F0,11 	    ' 	    52 	    F0,52
+R SHFT	59 	    F0,59 	    , 	    41 	    F0,41
+R CTRL	E0,14 	E0,F0,14	. 	    49 	    F0,49
+R GUI 	E0,27 	E0,F0,27	/ 	    4A 	    F0,4A
 
+*/
 const uint8_t __in_flash() table_key_zx_hid[256] = 
  {
   NC, NC,/*00 Reserved*/
