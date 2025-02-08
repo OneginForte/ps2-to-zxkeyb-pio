@@ -9,7 +9,9 @@ uint8_t ps2buffer[KBD_BUFFER_SIZE];
 static bool flag_f0, flag_e0;
 static uint8_t flag_e1;
 
-uint8_t const macro1[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //*"A : "
+bool led_cl=false;
+
+uint8_t const macro1[]  = { 0x7C, 0xF0, 0x7C, 0x37, 0 }; //*"A : "
 uint8_t const macro2[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RANDOMIZE USR 15616
 uint8_t const macro3[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageUP
 uint8_t const macro4[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageDown
@@ -134,80 +136,80 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {NC, NC, NC, NC},/*00*/  
 {NC, NC, NC, NC},/*(01) F9 */
 {NC, NC, NC, NC},/*(02)*/
-{NC, NC, NC, NC},/*(03) F5*/
-{_3, CS, NC, NC},/*(04) F3*/
-{NC, NC, NC, NC},/*(05) F1*/
-{NC, NC, NC, NC},/*(06) F2*/
+{NC, NC, NC, NC},/*(03) F5 */
+{_3, CS, NC, NC},/*(04) F3 */
+{NC, NC, NC, NC},/*(05) F1 */
+{NC, NC, NC, NC},/*(06) F2 */
 {NC, NC, NC, NC},/*(07) F12 */
-{NC, NC, NC, NC},/*(08) F13*/
+{NC, NC, NC, NC},/*(08) F13 */
 {NC, NC, NC, NC},/*(09) F10 */
 {NC, NC, NC, NC},/*(0A) F8 */
-{NC, NC, NC, NC},/*(0B) F6*/
-{_4, CS, NC, NC},/*(0C) F4*/
-{SS, CS, NC, NC},/*(0D) Tab CS+SS*/
+{NC, NC, NC, NC},/*(0B) F6 */
+{_4, CS, NC, NC},/*(0C) F4 */
+{SS, CS, NC, NC},/*(0D) Tab CS+SS */
 {_1, CS, NC, NC},/*(0E) Keyboard Grave Accent and Tilde  / Edit CS+1 */  // ` GRAVE
-{NC, NC, NC, NC},/*(0F) Keypad =*/
-{NC, NC, NC, NC},/*(10) F14*/
-{NC, NC, NC, NC},/*(11) Left ALt*/
-{CS, NC, NC, NC},/*(12) Left Shift*/
+{NC, NC, NC, NC},/*(0F) Keypad = */
+{NC, NC, NC, NC},/*(10) F14 */
+{NC, NC, NC, NC},/*(11) Left ALt */
+{CS, NC, NC, NC},/*(12) Left Shift */
 {NC, NC, NC, NC},/*(13)*/
 {SS, NC, NC, NC},/*(14)*/
-{_Q, NC, NC, NC},/*(15) Q*/
-{_1, NC, NC, NC},/*(16) 1*/
+{_Q, NC, NC, NC},/*(15) Q */
+{_1, NC, NC, NC},/*(16) 1 */
 {NC, NC, NC, NC},/*(17)*/
-{NC, NC, NC, NC},/*(18) F15*/
+{NC, NC, NC, NC},/*(18) F15 */
 {NC, NC, NC, NC},/*(19)*/
-{_Z, NC, NC, NC},/*(1A) Z*/
-{_S, NC, NC, NC},/*(1B) S*/
-{_A, NC, NC, NC},/*(1C) A*/ 	
-{_W, NC, NC, NC},/*(1D) W*/
-{_2, NC, NC, NC},/*(1E) 2*/ 
+{_Z, NC, NC, NC},/*(1A) Z */
+{_S, NC, NC, NC},/*(1B) S */
+{_A, NC, NC, NC},/*(1C) A */ 	
+{_W, NC, NC, NC},/*(1D) W */
+{_2, NC, NC, NC},/*(1E) 2 */ 
 {NC, NC, NC, NC},/*(1F)*/
-{NC, NC, NC, NC},/*(20) F16*/
-{_C, NC, NC, NC},/*(21) C*/
-{_X, NC, NC, NC},/*(22) X*/
-{_D, NC, NC, NC},/*(23) D*/
-{_E, NC, NC, NC},/*(24) E*/
-{_4, NC, NC, NC},/*(25) 4*/
-{_3, NC, NC, NC},/*(26) 3*/
+{NC, NC, NC, NC},/*(20) F16 */
+{_C, NC, NC, NC},/*(21) C */
+{_X, NC, NC, NC},/*(22) X */
+{_D, NC, NC, NC},/*(23) D */
+{_E, NC, NC, NC},/*(24) E */
+{_4, NC, NC, NC},/*(25) 4 */
+{_3, NC, NC, NC},/*(26) 3 */
 {NC, NC, NC, NC},/*(27)*/
-{NC, NC, NC, NC},/*(28) F17*/
-{SP, NC, NC, NC},/*(29) Space*/
-{_V, NC, NC, NC},/*(2A) V*/
-{_F, NC, NC, NC},/*(2B) F*/
-{_T, NC, NC, NC},/*(2C) T*/
-{_R, NC, NC, NC},/*(2D) R*/
-{_5, NC, NC, NC},/*(2E) 5*/
+{NC, NC, NC, NC},/*(28) F17 */
+{SP, NC, NC, NC},/*(29) Space */
+{_V, NC, NC, NC},/*(2A) V */
+{_F, NC, NC, NC},/*(2B) F */
+{_T, NC, NC, NC},/*(2C) T */
+{_R, NC, NC, NC},/*(2D) R */
+{_5, NC, NC, NC},/*(2E) 5 */
 {NC, NC, NC, NC},/*(2F)*/ //E0 2f APPS	
-{NC, NC, NC, NC},/*(30) F18*/
-{_N, NC, NC, NC},/*(31) N*/
-{_B, NC, NC, NC},/*(32) B*/ 
-{_H, NC, NC, NC},/*(33) H*/
-{_G, NC, NC, NC},/*(34) G*/
-{_Y, NC, NC, NC},/*(35) Y*/
-{_6, NC, NC, NC},/*(36) 6*/
+{NC, NC, NC, NC},/*(30) F18 */
+{_N, NC, NC, NC},/*(31) N */
+{_B, NC, NC, NC},/*(32) B */ 
+{_H, NC, NC, NC},/*(33) H */
+{_G, NC, NC, NC},/*(34) G */
+{_Y, NC, NC, NC},/*(35) Y */
+{_6, NC, NC, NC},/*(36) 6 */
 {NC, NC, NC, NC},/*(37)*/ //POWER	
-{NC, NC, NC, NC},/*(38) F19*/ 
+{NC, NC, NC, NC},/*(38) F19 */ 
 {NC, NC, NC, NC},/*(39)*/
-{_M, NC, NC, NC},/*(3A) M*/
-{_J, NC, NC, NC},/*(3B) J*/
-{_U, NC, NC, NC},/*(3C) U*/
-{_7, NC, NC, NC},/*(3D) 7*/
-{_8, NC, NC, NC},/*(3E) 8*/
+{_M, NC, NC, NC},/*(3A) M */
+{_J, NC, NC, NC},/*(3B) J */
+{_U, NC, NC, NC},/*(3C) U */
+{_7, NC, NC, NC},/*(3D) 7 */
+{_8, NC, NC, NC},/*(3E) 8 */
 {NC, NC, NC, NC},/*(3F)*/
-{NC, NC, NC, NC},/*(40) F20*/ 
-{_N, SS, NC, NC},/*(41) . SS+N   , SS+M*/ // .	
-{_K, NC, NC, NC},/*(42) K*/
-{_I, NC, NC, NC},/*(43) I*/
-{_O, NC, NC, NC},/*(44) O*/
-{_0, NC, NC, NC},/*(45) 0*/
-{_9, NC, NC, NC},/*(46) 9*/
+{NC, NC, NC, NC},/*(40) F20 */ 
+{_N, SS, NC, NC},/*(41) . SS+N  , SS+M */ // .	
+{_K, NC, NC, NC},/*(42) K */
+{_I, NC, NC, NC},/*(43) I */
+{_O, NC, NC, NC},/*(44) O */
+{_0, NC, NC, NC},/*(45) 0 */
+{_9, NC, NC, NC},/*(46) 9 */
 {NC, NC, NC, NC},/*(47)*/
 {SS, CS, NC, NC},/*(48) F21 ALT   Ext.Mode SS+CS  */
-{_M, SS, NC, NC},/*(49) , SS+M  . SS+N*/ // ,
-{_C, SS, _V, SS},/*(4A) ? SS+C*/ // /	/*54 Keypad / SS+V*/
-{_L, NC, NC, NC},/*(4B) L*/
-{_Z, SS, NC, NC},/*(4С) : SS+Z ; SS+O*/ // :
+{_M, SS, NC, NC},/*(49) , SS+M  . SS+N */ // ,
+{_C, SS, _V, SS},/*(4A) ? SS+C */ /*E0 4A Keypad / SS+V */
+{_L, NC, NC, NC},/*(4B) L */
+{_Z, SS, NC, NC},/*(4С) : SS+Z ; SS+O */ // :
 {_P, NC, NC, NC},/*(4D) P*/
 {_J, SS, NC, NC},/*(4E) - SS+J*/
 {NC, NC, NC, NC},/*(4F)*/
@@ -221,10 +223,10 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {SS, NC, NC, NC},/*(57) F23 SHIFT / SS ZX  */
 {_2, CS, NC, NC},/*(58) Caps Lock  CS+2*/ // CAPS
 {CS, NC, NC, NC},/*(59) Casp Shift*/
-{EN, NC, EN, NC},/*(5A) Enter*/      //E0 5a,EN, NC,/*58 Keypad Enter */
+{EN, NC, EN, NC},/*(5A) Enter*/  /*E0 5A {EN, NC} Keypad Enter */
 {_L, SS, NC, NC},/*(5B) SS+L*/ // ]	
 {NC, NC, NC, NC},/*(5C)*/
-{NC, NC, NC, NC},/*(5D) \*/ // BACKSLASH	5d,NC, NC,/*32 `*/ // EUROPE_1
+{NC, NC, NC, NC},/*(5D) \ */ /* BACKSLASH 5D {NC, NC} `*/ // EUROPE_1
 {NC, NC, NC, NC},/*(5E)*/
 {NC, NC, NC, NC},/*(5F) F24 WIN */
 {NC, NC, NC, NC},/*(60)*/
@@ -236,28 +238,28 @@ const uint8_t __in_flash() table_key_zx_ps[][4]  =
 {_0, CS, NC, NC},/*(66) Keyboard Delete (Backspace)  CS+0 ???????*/
 {NC, NC, NC, NC},/*(67)*/
 {NC, NC, NC, NC},/*(68)*/
-{_1, NC, NC, NC},/*(69) Keypad 1 */   //E0 69,NC, NC,/*4D End */
+{_1, NC, NC, NC},/*(69) Keypad 1 */  /*E0 69 {NC, NC} End */
 {NC, NC, NC, NC},/*(6A)*/
-{_4, NC, _5, CS},/*(6B) Keypad 4 */   //E0 6b,_5, CS,/*50 LeftArrow CS+5*
-{_7, NC, NC, NC},/*(6C) Keypad 7 */   //E0 6c,NC, NC,/*4A Home */
+{_4, NC, _5, CS},/*(6B) Keypad 4 */  /*E0 6B {_5, CS} LeftArrow CS+5*/
+{_7, NC, NC, NC},/*(6C) Keypad 7 */  /*E0 6B {NC, NC}, Home */
 {NC, NC, NC, NC},/*(6D)*/
 {NC, NC, NC, NC},/*(6E)*/
 {NC, NC, NC, NC},/*(6F)*/
-{_0, NC, NC, NC},/*(70) Keypad 0 */   //E0 70,NC, NC,/*49 Insert */
-{NC, NC, NC, NC},/*(71) Keypad Del.*/ //E0 71,NC, NC,/*4C Del */
-{_2, NC, _6, CS},/*(72) Keypad 2 */   //E0 72,_6, CS,/*51 DownArrow  CS+6*/
+{_0, NC, NC, NC},/*(70) Keypad 0 */   /*E0 70 {NC, NC} Insert */
+{NC, NC, NC, NC},/*(71) Keypad Del.*/ /*E0 71 {NC, NC} Del */
+{_2, NC, _6, CS},/*(72) Keypad 2 */   /*E0 72 {_6, CS} DownArrow CS+6 */
 {_5, NC, NC, NC},/*(73) Keypad 5 */  
-{_6, NC, _8, CS},/*(74) Keypad 6 */   //E0 74,_8, CS,/*4F RightArrow CS+8*/
-{_8, NC, _7, CS},/*(75) Keypad 8 */   //E0 75,_7, CS,/*52 UpArrow CS+7*/
-{SP, CS, NC, NC},/*(76) Escape/ Break CS+Space*/
-{NC, NC, NC, NC},/*(77) Keypad Num Lock and Clear*/
+{_6, NC, _8, CS},/*(74) Keypad 6 */   /*E0 74 {_8, CS} RightArrow CS+8 */
+{_8, NC, _7, CS},/*(75) Keypad 8 */   /*E0 75 {_7, CS} UpArrow CS+7 */
+{SP, CS, NC, NC},/*(76) Escape/ Break CS+Space */
+{NC, NC, NC, NC},/*(77) Keypad Num Lock and Clear */
 {NC, NC, NC, NC},/*(78) F11 */
 {_K, SS, NC, NC},/*(79) Keypad + */ 
-{_3, NC, _4, CS},/*(7A) Keypad 3 */   //E0 7a,_4, CS,/*4E PageDown CS+4 Inv Video*/
+{_3, NC, _4, CS},/*(7A) Keypad 3 */ /*E0 7A {_4, CS} PageDown CS+4 Inv Video */
 {_I, SS, NC, NC},/*(7B) Keypad - */
-{NC, NC ,_9, CS},/*(7C) Keypad * */   //E0 7c,_9, CS,/*46 PrintScreen Graph Mode CS+9*/
-{_9, NC, _3, CS},/*(7D) Keypad 9 */   //E0 7D,_3, CS,/*4B PageUp CS+3 True Video*/    
-{NC, NC, NC, NC},/*(7E) Scroll Lock*/ //E1 14 77 E1 F0 14 F0 77 7e,NC, NC,/*48 Pause */
+{NC, NC ,_9, CS},/*(7C) Keypad * */ /*E0 7C {_9, CS} PrintScreen Graph Mode CS+9 */
+{_9, NC, _3, CS},/*(7D) Keypad 9 */ /*E0 7D {_3, CS} PageUp CS+3 True Video */
+{NC, NC, NC, NC},/*(7E) Scroll Lock */ /*E1 14 77 E1 F0 14 F0 77 7E {NC, NC} Pause */
 {NC, NC, NC, NC},/*(7F)*/
 {NC, NC, NC, NC},/*(80)*/
 {NC, NC, NC, NC},/*(81)*/
@@ -442,35 +444,12 @@ void SetKey(bool data){
    //gpio_put(CSMT, 0);   
 }
 
-
-
-//---------------------------------------------------
-void scancode_s(uint8_t code)
-{
-   if (code & 0x02) tab_key[0x71]=1;    // left shift  
-   if (code & 0x20) tab_key[0x71]=1;    // righr shift 
-
-   if (code & 0x04) tab_key[0x70]=1;    // left alt    0000 0100
-   if (code & 0x40) tab_key[0x70]=1;    // right alt   0100 0000
-   
-   if (code & 0x01) tab_key[0x72]=1;    // right ctrl   
-   if (code & 0x10) tab_key[0x72]=1;    // left ctrl
-   
-   if (code & 0x08) tab_key[0x73]=1;    // win  l
-   if (code & 0x80) tab_key[0x73]=1;    // win r
-   }
-
-//----------------------------------------------------------
-bool led_cl=true;
-
-
 void key_on(uint8_t code) // клавиша нажата
 {
 
             gpio_put(LEDPIN, 1);//led
             //ws2812_set_rgb(0, 1, 0);
-
-            
+    
             if (flag_e0==true){
                 if ((table_key_zx_ps[code][2]==NC)||((tab_key[code]&0xf0)==0xf0)) return;// если на код нет нажатия клавиши ZX или уже нажата
                 if (table_key_zx_ps[code][3]!=NC) //если есть клавиша модификатор
@@ -499,12 +478,7 @@ void key_on(uint8_t code) // клавиша нажата
             SetKey(1);//нажатие клавиши
             printf( "Key ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
             }
-
-              
-            
-              
-                          
-             
+         
 }
 
 void key_off(uint8_t code)// клавиша отпущена
@@ -545,36 +519,6 @@ void key_off(uint8_t code)// клавиша отпущена
             
 }
 
-void keyboard(uint8_t const *report, uint16_t len)
-{
-
-    printf("0x%d 0x%d 0x%d 0x%d 0x%d 0x%d 0x%d\r\n", report[0], report[1], report[2], report[3], report[4], report[5], report[6]);
-    //printf("Modifiers %d, len %d \n", modifiers, len  );
-    //debug_print("0x%02X 0x%02X 0x%02X 0x%02X  0x%02X 0x%02X 0x%02X\r\n", report[0] , report[2], report[3], report[4], report[5], report[6], report[7]);
-
-    scancode_s(report[0]); // запись в таблицу 0 кода alt ctrl shift win
-    // tab_key[report[1]]=1;// запись в таблицу 1 кода reserved
-    tab_key[report[2]] = 1; // запись в таблицу 2 кода
-    tab_key[report[3]] = 1; // запись в таблицу 3 кода
-    tab_key[report[4]] = 1; // запись в таблицу 4 кода
-    tab_key[report[5]] = 1; // запись в таблицу 5 кода
-    tab_key[report[6]] = 1; // запись в таблицу 6 кода
-    tab_key[report[7]] = 1; // запись в таблицу 7 кода
-
-    for (uint8_t i = 0; i < 127; i++)
-    {
-        uint8_t d = (tab_key[i] << 1) | (tab_key_old[i]); // 0b000000x0 |0b0000000y
-        // if (d==0) // не нажато уже выключать не нужно
-        if (d == 2)
-            key_on(i); // нажато сейчас
-        // if (d==3) // нажато уже включать не нужно
-        if (d == 1)
-            key_off(i);              // клавиша отпущена  сейчас
-        tab_key_old[i] = tab_key[i]; // копирование таблицы
-        tab_key[i] = 0;              // стирание таблицы
-    }
-}
-
 
 //----------------------------------------------------------------------------
 void keyboard_task(ps2out* this)
@@ -608,16 +552,16 @@ void keyboard_task(ps2out* this)
 			break;
             //Add send macro void kb_send_sc_list(const u8 *list)
         case 0x05:
-            kb_send_sc_list(const u8 *macro1);
+            kb_send_sc_list(macro1);
 			break;
         case 0x06:
-            kb_send_sc_list(const u8 *macro2);
+            kb_send_sc_list(macro2);
 			break;
         case 0x04:
-            kb_send_sc_list(const u8 *macro3);
+            kb_send_sc_list(macro3);
 			break;
         case 0x0C:
-            kb_send_sc_list(const u8 *macro4);
+            kb_send_sc_list(macro4);
 			break;
 /*
 E 	    24 	    F0,24 	    F1 	    05 	    F0,05
@@ -665,36 +609,6 @@ P 	    4D 	    F0,4D 	    F12 	07 	    F0,07
     
     }
 
-    
-    //scancode_s(pack[0]); // запись в таблицу 0 кода alt ctrl shift win
-    // tab_key[report[1]]=1;// запись в таблицу 1 кода reserved
-    //tab_key[pack[0]] = 1; // запись в таблицу 2 кода
-/*
-            i++;
-        pack[i] = byte;
-        }
-        pack[0] = i;
-        //queue_try_add(&this->qpacks, &pack);
-    
-    if (pack[0]!=0){
-        for (uint8_t i = 0; i < 127; i++)
-        {
-            uint8_t d = (tab_key[i] << 1) | (tab_key_old[i]); // 0b000000x0 |0b0000000y
-            // if (d==0) // не нажато уже выключать не нужно
-            if ((d==0) && (pack[1] != 0xFF)){
-                key_on(pack[1]); // нажато сейчас
-                tab_key[pack[1]] = 1;
-            }   
-            // if (d==3) // нажато уже включать не нужно
-            else {
-                key_off(pack[2]);              // клавиша отпущена  сейчас
-                //tab_key[pack[1]] = 0;
-            }
-            tab_key_old[i] = tab_key[i]; // копирование таблицы
-            tab_key[i] = 0;              // стирание таблицы
-        }
-        }
-        */
 }
 
  //----------------------------------------------------------

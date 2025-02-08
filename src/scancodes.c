@@ -473,3 +473,53 @@ u8 const hid2ps2_3[] = {
   0x00,       // F23
   0x00        // F24
 };
+
+
+    //scancode_s(pack[0]); // запись в таблицу 0 кода alt ctrl shift win
+    // tab_key[report[1]]=1;// запись в таблицу 1 кода reserved
+    //tab_key[pack[0]] = 1; // запись в таблицу 2 кода
+/*
+
+
+//---------------------------------------------------
+void scancode_s(uint8_t code)
+{
+   if (code & 0x02) tab_key[0x71]=1;    // left shift  
+   if (code & 0x20) tab_key[0x71]=1;    // righr shift 
+
+   if (code & 0x04) tab_key[0x70]=1;    // left alt    0000 0100
+   if (code & 0x40) tab_key[0x70]=1;    // right alt   0100 0000
+   
+   if (code & 0x01) tab_key[0x72]=1;    // right ctrl   
+   if (code & 0x10) tab_key[0x72]=1;    // left ctrl
+   
+   if (code & 0x08) tab_key[0x73]=1;    // win  l
+   if (code & 0x80) tab_key[0x73]=1;    // win r
+   }
+
+//----------------------------------------------------------
+            i++;
+        pack[i] = byte;
+        }
+        pack[0] = i;
+        //queue_try_add(&this->qpacks, &pack);
+    
+    if (pack[0]!=0){
+        for (uint8_t i = 0; i < 127; i++)
+        {
+            uint8_t d = (tab_key[i] << 1) | (tab_key_old[i]); // 0b000000x0 |0b0000000y
+            // if (d==0) // не нажато уже выключать не нужно
+            if ((d==0) && (pack[1] != 0xFF)){
+                key_on(pack[1]); // нажато сейчас
+                tab_key[pack[1]] = 1;
+            }   
+            // if (d==3) // нажато уже включать не нужно
+            else {
+                key_off(pack[2]);              // клавиша отпущена  сейчас
+                //tab_key[pack[1]] = 0;
+            }
+            tab_key_old[i] = tab_key[i]; // копирование таблицы
+            tab_key[i] = 0;              // стирание таблицы
+        }
+        }
+        */
