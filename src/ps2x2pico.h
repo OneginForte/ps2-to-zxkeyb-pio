@@ -1,4 +1,4 @@
-//#pragma once
+#pragma once
 /*
  * The MIT License (MIT)
  *
@@ -102,9 +102,6 @@ extern const enum zx_key{
     _4=0x47,
     _5=0x37
 } zx_key_pent;
-
-
-
 
 
 void scancode_s(uint8_t code);
@@ -216,22 +213,37 @@ enum
 // макросы end
 
 
+extern uint8_t const macro1[]; 
+extern uint8_t const macro2[]; 
+extern uint8_t const macro3[]; 
+extern uint8_t const macro4[]; 
+extern uint8_t const macro5[];
+extern uint8_t const macro6[]; 
+extern uint8_t const macro7[];
+extern uint8_t const macro8[];
+extern uint8_t const macro9[];
+extern uint8_t const macro10[];
+extern uint8_t const macro11[];
+extern uint8_t const macro12[];
 
-extern u8 const ext_code_keys_1_2[]; // keys in this list need to have KB_EXT_PFX_E0 sent before their actual code
-extern u8 const ext_code_modifier_keys_1_2[]; // keys in this list need to have KB_EXT_PFX_E0 sent before their actual code
-extern u8 const mod2ps2_1[];
-extern u8 const mod2ps2_2[];
-extern u8 const mod2ps2_3[];
-extern u8 const hid2ps2_1[];
-extern u8 const hid2ps2_2[];
-extern u8 const hid2ps2_3[];
-extern u8 const prt_scn_make_1[];
-extern u8 const prt_scn_break_1[];
-extern u8 const break_make_1[];
-extern u8 const pause_make_1[];
-extern u8 const prt_scn_make_2[];
-extern u8 const prt_scn_break_2[];
-extern u8 const break_make_2[];
-extern u8 const pause_make_2[];
+
+extern uint8_t const ext_code_keys_1_2[]; // keys in this list need to have KB_EXT_PFX_E0 sent before their actual code
+extern uint8_t const ext_code_modifier_keys_1_2[]; // keys in this list need to have KB_EXT_PFX_E0 sent before their actual code
+extern uint8_t const mod2ps2_1[];
+extern uint8_t const mod2ps2_2[];
+extern uint8_t const mod2ps2_3[];
+extern uint8_t const hid2ps2_1[];
+extern uint8_t const hid2ps2_2[];
+extern uint8_t const hid2ps2_3[];
+extern uint8_t const prt_scn_make_1[];
+extern uint8_t const prt_scn_break_1[];
+extern uint8_t const break_make_1[];
+extern uint8_t const pause_make_1[];
+extern uint8_t const prt_scn_make_2[];
+extern uint8_t const prt_scn_break_2[];
+extern uint8_t const break_make_2[];
+extern uint8_t const pause_make_2[];
+extern uint8_t const table_key_zx_hid[];
+extern uint8_t const table_key_zx_ps[][4];
 
 #endif
