@@ -50,7 +50,7 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 set(MS_RATE_DEFAULT 100 CACHE STRING "Default mouse sample rate")
 set(MS_RATE_HOST_CONTROL ON CACHE BOOL "Allow the host to configure the mouse sample rate")
 
-add_compile_definitions(DEBUG=1)
+add_compile_definitions(DEBUG=0)
 
 # Pull in Raspberry Pi Pico SDK
 include(pico_sdk_import.cmake)
@@ -88,8 +88,8 @@ target_compile_definitions(ps2x2pico PRIVATE PIO_USB_USE_TINYUSB)
 #add_compile_definitions(LVIN=6) # Level shifter pull-up voltage
 add_compile_definitions(KBIN=3) # Keyboard data GPIO3, clock pin is GPIO4
 add_compile_definitions(MSIN=5) # Mouse data GPIO6, clock pin is GPIO7
-add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=15)
-add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=26)
+add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=-1)
+add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=-1)
 
 add_compile_definitions(PICO_PANIC_FUNCTION=reset)
 
@@ -101,7 +101,7 @@ endif()
 pico_set_program_name(ps2x2pico "ps2x2pico")
 pico_set_program_version(ps2x2pico "2.2")
 
-pico_enable_stdio_uart(ps2x2pico 1)
+pico_enable_stdio_uart(ps2x2pico 0)
 pico_enable_stdio_usb(ps2x2pico 0)
 
 add_subdirectory("./Pico-PIO-USB" pico_pio_usb)
