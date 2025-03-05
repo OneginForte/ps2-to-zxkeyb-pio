@@ -38,14 +38,19 @@
 //#define CFG_TUSB_RHPORT0_MODE OPT_MODE_HOST
 
 #ifndef CFG_TUSB_OS
-#define CFG_TUSB_OS           OPT_OS_PICO
+#define CFG_TUSB_OS           OPT_OS_NONE
 #endif
 
 // Enable Host stack
 #define CFG_TUH_ENABLED       1
+
+#if CFG_TUSB_MCU == OPT_MCU_RP2040
+// change to 1 if using pico-pio-usb as host controller for raspberry rp2040
 #define CFG_TUH_RPI_PIO_USB   1
+#define BOARD_TUH_RHPORT      CFG_TUH_RPI_PIO_USB
+#endif
+
 #define CFG_TUH_RPI_DUAL_USB  1
-#define BOARD_TUH_RHPORT      1
 #define CFG_TUH_MSC           0
 #define CFG_TUSB_RHPORT0_MODE (OPT_MODE_HOST | OPT_MODE_FULL_SPEED)
 #define CFG_TUSB_RHPORT1_MODE (OPT_MODE_HOST | OPT_MODE_FULL_SPEED)

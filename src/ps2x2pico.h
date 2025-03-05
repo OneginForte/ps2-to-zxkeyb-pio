@@ -113,6 +113,7 @@ void kb_res_leds(uint8_t d);
 
 
 void kb_init(u8 gpio_in);
+void kb_send_sc_list(const u8 *list);
 void kb_send_key(u8 key, bool is_key_pressed, u8 modifiers);
 void tuh_kb_set_leds(u8 leds);
 bool kb_task();

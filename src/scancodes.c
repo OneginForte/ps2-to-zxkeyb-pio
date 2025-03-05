@@ -55,19 +55,32 @@ u8 const ext_code_modifier_keys_1_2[] = {
   0
 };
 
-u8 const prt_scn_make_1[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
-u8 const prt_scn_break_1[] = { 0xe0, 0xb7, 0xe0, 0xaa, 0 };
-u8 const break_make_1[]    = { 0xe0, 0x46, 0xe0, 0xc6, 0 };
-u8 const pause_make_1[]    = { 0xe1, 0x1d, 0x45, 0xe1, 0x9d, 0xc5, 0 };
+uint8_t const macro1[]  = { 0x7C, 0xF0, 0x7C, 0x37, 0 }; //*"A : "
+uint8_t const macro2[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RANDOMIZE USR 15616
+uint8_t const macro3[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageUP
+uint8_t const macro4[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageDown
+uint8_t const macro5[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RUN "BOOT" 
+uint8_t const macro6[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RUN ""
+uint8_t const macro7[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
+uint8_t const macro8[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
+uint8_t const macro9[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
+uint8_t const macro10[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
+uint8_t const macro11[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
+uint8_t const macro12[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
 
-u8 const prt_scn_make_2[]  = { 0xe0, 0x12, 0xe0, 0x7c, 0 };
-u8 const prt_scn_break_2[] = { 0xe0, 0xf0, 0x7c, 0xe0, 0xf0, 0x12, 0 };
-u8 const break_make_2[]    = { 0xe0, 0x7e, 0xe0, 0xf0, 0x7e, 0 };
-u8 const pause_make_2[]    = { 0xe1, 0x14, 0x77, 0xe1, 0xf0, 0x14, 0xf0, 0x77, 0 };
+uint8_t const prt_scn_make_1[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
+uint8_t const prt_scn_break_1[] = { 0xe0, 0xb7, 0xe0, 0xaa, 0 };
+uint8_t const break_make_1[]    = { 0xe0, 0x46, 0xe0, 0xc6, 0 };
+uint8_t const pause_make_1[]    = { 0xe1, 0x1d, 0x45, 0xe1, 0x9d, 0xc5, 0 };
+
+uint8_t const prt_scn_make_2[]  = { 0xe0, 0x12, 0xe0, 0x7c, 0 };
+uint8_t const prt_scn_break_2[] = { 0xe0, 0xf0, 0x7c, 0xe0, 0xf0, 0x12, 0 };
+uint8_t const break_make_2[]    = { 0xe0, 0x7e, 0xe0, 0xf0, 0x7e, 0 };
+uint8_t const pause_make_2[]    = { 0xe1, 0x14, 0x77, 0xe1, 0xf0, 0x14, 0xf0, 0x77, 0 };
 
 // break codes in set 1 are created from the make code by adding 128 (0x80) or in other words set the msb.
 // this is true even for the extended codes (but 0xe0 stays 0xe0) and the special multi byte codes for print screen and pause
-u8 const mod2ps2_1[] = {
+uint8_t const mod2ps2_1[] = {
   0x1d, // L CTRL
   0x2a, // L SHFT
   0x38, // L ALT
@@ -78,7 +91,7 @@ u8 const mod2ps2_1[] = {
   0x5c  // R GUI
 };
 
-u8 const mod2ps2_2[] = {
+uint8_t const mod2ps2_2[] = {
   0x14, // L CTRL
   0x12, // L SHFT
   0x11, // L ALT
@@ -89,7 +102,7 @@ u8 const mod2ps2_2[] = {
   0x27  // R WIN
 };
 
-u8 const mod2ps2_3[] = {
+uint8_t const mod2ps2_3[] = {
   0x11, // L CTRL
   0x12, // L SHFT
   0x19, // L ALT
@@ -102,7 +115,7 @@ u8 const mod2ps2_3[] = {
 
 // break codes in set 1 are created from the make code by adding 128 (0x80) or in other words set the msb.
 // this is true even for the extended codes (but 0xe0 stays 0xe0) and the special multi byte codes for print screen and pause
-u8 const hid2ps2_1[] = {
+uint8_t const hid2ps2_1[] = {
   // 0x00 - 0x0f
   0, 0, 0, 0, // NONE
   0x1e, // A
@@ -226,7 +239,7 @@ u8 const hid2ps2_1[] = {
   0x76  // F24
 };
 
-u8 const hid2ps2_2[] = {
+uint8_t const hid2ps2_2[] = {
   // 0x00 - 0x0f
   0, 0, 0, 0, // NONE
   0x1c, // A
@@ -350,7 +363,7 @@ u8 const hid2ps2_2[] = {
   0x5f  // F24
 };
 
-u8 const hid2ps2_3[] = {
+uint8_t const hid2ps2_3[] = {
   // 0x00 - 0x0f
   0, 0, 0, 0, // NONE
   0x1C,       // A
@@ -614,18 +627,7 @@ const uint8_t __in_flash() table_key_zx_hid[256] =
   NC, NC,/*7F*/   
  };
 
- const uint8_t __in_flash() macro1[]  = { 0x7C, 0xF0, 0x7C, 0x37, 0 }; //*"A : "
- const uint8_t __in_flash() macro2[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RANDOMIZE USR 15616
- const uint8_t __in_flash() macro3[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageUP
- const uint8_t __in_flash() macro4[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageDown
- const uint8_t __in_flash() macro5[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RUN "BOOT" 
- const uint8_t __in_flash() macro6[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RUN ""
- const uint8_t __in_flash() macro7[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
- const uint8_t __in_flash() macro8[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
- const uint8_t __in_flash() macro9[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
- const uint8_t __in_flash() macro10[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
- const uint8_t __in_flash() macro11[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
- const uint8_t __in_flash() macro12[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
+
  
  
  /*

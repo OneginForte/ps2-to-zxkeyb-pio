@@ -1,6 +1,10 @@
 #include "ps2x2pico.h"
 
+uint8_t mt_matrix[8] = {0x00};// синхронизация матрицы для МТ8816
 uint8_t tab_key[128] = {0x00};// таблица нажатых клавиш
+uint8_t tab_key_old[128] = {0x00};// таблица предыдушего нажатия клавиш
+//static uint8_t ps2bufsize = 0;
+uint8_t ps2buffer[KBD_BUFFER_SIZE];
 
 static bool flag_f0, flag_e0;
 static uint8_t flag_e1;
@@ -36,6 +40,7 @@ void SetKey(bool data){
 
 void key_on(uint8_t code) // клавиша нажата
 {
+
             gpio_put(LEDPIN, 1);//led
             //ws2812_set_rgb(0, 1, 0);
     
@@ -51,29 +56,32 @@ void key_on(uint8_t code) // клавиша нажата
                 tab_key[code]=(tab_key[code]&0x0f)|0xf0;
                 SetAddr(table_key_zx_ps[code][2]);// адрес клавиши zx 
                 SetKey(1);//нажатие клавиши
-
+                #if DEBUG==1
                 printf( "Key E0 ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
+                #endif
             }
             else { 
-                if ((table_key_zx_ps[code][0]==NC)||((tab_key[code]&0x0f)==0x0f)) return;// если на код нет нажатия клавиши ZX или уже нажата
-                if (table_key_zx_ps[code][1]!=NC) //если есть клавиша модификатор
-                {
+            if ((table_key_zx_ps[code][0]==NC)||((tab_key[code]&0x0f)==0x0f)) return;// если на код нет нажатия клавиши ZX или уже нажата
+            if (table_key_zx_ps[code][1]!=NC) //если есть клавиша модификатор
+            {
                 
-                    SetAddr(table_key_zx_ps[code][1]);// адрес  клавиши модификатора zx CS или SS 
-                    SetKey(1);//нажатие клавиши
-                
-                }
-                tab_key[code]=(tab_key[code]&0xf0)|0x0f;
-                SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
+                SetAddr(table_key_zx_ps[code][1]);// адрес  клавиши модификатора zx CS или SS 
                 SetKey(1);//нажатие клавиши
-
-                printf( "Key ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
+                
+            }
+            tab_key[code]=(tab_key[code]&0xf0)|0x0f;
+            SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
+            SetKey(1);//нажатие клавиши
+            #if DEBUG==1
+            printf( "Key ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
+            #endif
             }
          
 }
 
 void key_off(uint8_t code)// клавиша отпущена
 {
+            //kb_set_leds(0);// 0. Num lock 1.  Caps lock 2.  Scroll
             gpio_put(LEDPIN, 0);//led
             //ws2812_set_rgb(0, 0, 1); 
 
@@ -89,23 +97,25 @@ void key_off(uint8_t code)// клавиша отпущена
                 tab_key[code]=(tab_key[code]&0x0f);
                 SetAddr(table_key_zx_ps[code][2]);// адрес клавиши zx 
                 SetKey(0);//нажатие клавиши
-
+                #if DEBUG==1
                 printf( "Key E0 OFF: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
+                #endif
             }
             else { 
-                if (table_key_zx_ps[code][0]==NC)return;// если на код нет нажатия клавиши ZX
-                if (table_key_zx_ps[code][1]!=NC) //если есть клавиша модификатор
-                {
+            if (table_key_zx_ps[code][0]==NC)return;// если на код нет нажатия клавиши ZX
+            if (table_key_zx_ps[code][1]!=NC) //если есть клавиша модификатор
+            {
                 
-                    SetAddr(table_key_zx_ps[code][1]);// адрес  клавиши модификатора zx CS или SS 
-                    SetKey(0);//нажатие клавиши
-                
-                }
-                tab_key[code]=(tab_key[code]&0xf0);
-                SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
+                SetAddr(table_key_zx_ps[code][1]);// адрес  клавиши модификатора zx CS или SS 
                 SetKey(0);//нажатие клавиши
-
-                printf( "Key OFF: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
+                
+            }
+            tab_key[code]=(tab_key[code]&0xf0);
+            SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
+            SetKey(0);//нажатие клавиши
+            #if DEBUG==1
+            printf( "Key OFF: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
+            #endif
             }
 
             

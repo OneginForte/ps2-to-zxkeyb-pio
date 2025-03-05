@@ -88,6 +88,7 @@ target_compile_definitions(ps2x2pico PRIVATE PIO_USB_USE_TINYUSB)
 #add_compile_definitions(LVIN=6) # Level shifter pull-up voltage
 add_compile_definitions(KBIN=3) # Keyboard data GPIO3, clock pin is GPIO4
 add_compile_definitions(MSIN=5) # Mouse data GPIO6, clock pin is GPIO7
+add_compile_definitions(PIOH=0)
 add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=-1)
 add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=-1)
 
