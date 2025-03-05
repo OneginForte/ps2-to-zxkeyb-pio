@@ -629,11 +629,11 @@ const uint8_t __in_flash() table_key_zx_hid[256] =
  
  
  /*
- KEY 	MAKE 	BREAK 	    KEY 	MAKE 	BREAK
+ KEY 	MAKE 	    BREAK 	    KEY 	  MAKE 	BREAK
  A 	    1C 	    F0,1C 	    R ALT 	E0,11 	E0,F0,11
- B 	    32 	    F0,32 	    APPS 	E0,2F 	E0,F0,2F
+ B 	    32 	    F0,32 	    APPS 	  E0,2F 	E0,F0,2F
  C 	    21 	    F0,21 	    ENTER 	5A 	    F0,5A
- D 	    23 	    0,23 	    ESC 	76 	    F0,76
+ D 	    23 	    0,23 	      ESC 	  76 	    F0,76
  E 	    24 	    F0,24 	    F1 	    05 	    F0,05
  F 	    2B 	    F0,2B 	    F2 	    06 	    F0,06
  G 	    34 	    F0,34 	    F3 	    04 	    F0,04
@@ -643,81 +643,81 @@ const uint8_t __in_flash() table_key_zx_hid[256] =
  K 	    42 	    F0,42 	    F7 	    83 	    F0,83
  L 	    4B 	    F0,4B 	    F8 	    0A 	    F0,0A
  M 	    3A 	    F0,3A 	    F9 	    01 	    F0,01
- N 	    31 	    F0,31 	    F10 	09 	    F0,09
- O 	    44 	    F0,44 	    F11 	78 	    F0,78
- P 	    4D 	    F0,4D 	    F12 	07 	    F0,07
+ N 	    31 	    F0,31 	    F10 	  09 	    F0,09
+ O 	    44 	    F0,44 	    F11 	  78 	    F0,78
+ P 	    4D 	    F0,4D 	    F12 	  07 	    F0,07
  Q 	    15 	    F0,15 	    SCROLL	7E 	    F0,7E
  R 	    2D 	    F0,2D 	    [ 	    54 	    FO,54
  S 	    1B 	    F0,1B 	    INSERT	E0,70 	E0,F0,70
- T 	    2C 	    F0,2C 	    HOME 	E0,6C 	E0,F0,6C
+ T 	    2C 	    F0,2C 	    HOME 	  E0,6C 	E0,F0,6C
  U 	    3C 	    F0,3C 	    PG UP 	E0,7D 	E0,F0,7D
  V 	    2A 	    F0,2A 	    DELETE	E0,71 	E0,F0,71
- W 	    1D 	    F0,1D 	    END 	E0,69 	E0,F0,69
+ W 	    1D 	    F0,1D 	    END 	  E0,69 	E0,F0,69
  X 	    22 	    F0,22 	    PG DN 	E0,7A 	E0,F0,7A
  Y 	    35 	    F0,35 	    UP 	    E0,75 	E0,F0,75
- Z 	    1A 	    F0,1A 	    LEFT 	E0,6B 	E0,F0,6B
- 0 	    45 	    F0,45 	    DOWN 	E0,72 	E0,F0,72
+ Z 	    1A 	    F0,1A 	    LEFT 	  E0,6B 	E0,F0,6B
+ 0 	    45 	    F0,45 	    DOWN 	  E0,72 	E0,F0,72
  1 	    16 	    F0,16 	    RIGHT 	E0,74 	E0,F0,74
- 2 	    1E 	    F0,1E 	    NUM 	77 	    F0,77
- 3 	    26 	    F0,26 	    KP / 	E0,4A 	E0,F0,4A
- 4 	    25 	    F0,25 	    KP * 	7C 	    F0,7C
- 5 	    2E 	    F0,2E 	    KP - 	7B 	    F0,7B
- 6 	    36 	    F0,36 	    KP + 	79 	    F0,79
+ 2 	    1E 	    F0,1E 	    NUM 	  77 	    F0,77
+ 3 	    26 	    F0,26 	    KP / 	  E0,4A 	E0,F0,4A
+ 4 	    25 	    F0,25 	    KP * 	  7C 	    F0,7C
+ 5 	    2E 	    F0,2E 	    KP - 	  7B 	    F0,7B
+ 6 	    36 	    F0,36 	    KP + 	  79 	    F0,79
  7 	    3D 	    F0,3D 	    KP EN 	E0,5A 	E0,F0,5A
- 8 	    3E 	    F0,3E 	    KP . 	71 	    F0,71
- 9 	    46 	    F0,46 	    KP 0 	70 	    F0,70
- ` 	    0E 	    F0,0E 	    KP 1 	69 	    F0,69
- - 	    4E 	    F0,4E 	    KP 2 	72 	    F0,72
- = 	    55 	    FO,55 	    KP 3 	7A 	    F0,7A
- \ 	    5D 	    F0,5D 	    KP 4 	6B 	    F0,6B
- BKSP 	66 	    F0,66 	    KP 5 	73 	    F0,73
- SPACE 	29 	    F0,29 	    KP 6 	74 	    F0,74
- TAB 	0D 	    F0,0D 	    KP 7 	6C  	F0,6C
- CAPS 	58 	    F0,58 	    KP 8 	75 	    F0,75
- L SHFT	12 	    FO,12 	    KP 9 	7D 	    F0,7D
+ 8 	    3E 	    F0,3E 	    KP .    71 	    F0,71
+ 9 	    46 	    F0,46 	    KP 0 	  70 	    F0,70
+ ` 	    0E 	    F0,0E 	    KP 1 	  69 	    F0,69
+ - 	    4E 	    F0,4E 	    KP 2 	  72 	    F0,72
+ = 	    55 	    FO,55 	    KP 3 	  7A 	    F0,7A
+ \ 	    5D 	    F0,5D 	    KP 4 	  6B 	    F0,6B
+ BKSP 	66 	    F0,66 	    KP 5 	  73 	    F0,73
+ SPACE 	29 	    F0,29 	    KP 6 	  74 	    F0,74
+ TAB 	  0D 	    F0,0D 	    KP 7 	  6C  	  F0,6C
+ CAPS 	58 	    F0,58 	    KP 8 	  75 	    F0,75
+ L SHFT	12 	    FO,12 	    KP 9 	  7D 	    F0,7D
  L CTRL	14 	    FO,14 	    ] 	    5B 	    F0,5B
- L GUI 	E0,1F 	E0,F0,1F	; 	    4C 	    F0,4C
+ L GUI 	E0,1F 	E0,F0,1F	  ; 	    4C 	    F0,4C
  L ALT 	11 	    F0,11 	    ' 	    52 	    F0,52
  R SHFT	59 	    F0,59 	    , 	    41 	    F0,41
- R CTRL	E0,14 	E0,F0,14	. 	    49 	    F0,49
- R GUI 	E0,27 	E0,F0,27	/ 	    4A 	    F0,4A
+ R CTRL	E0,14 	E0,F0,14	  . 	    49 	    F0,49
+ R GUI 	E0,27 	E0,F0,27	  / 	    4A 	    F0,4A
  
  */
  
  /*
- Left/Right Shift 	        N/A 	                                                CAPS SHIFT 	Modifies the other keys you’ll press with it
- Left/Right CTRL 	        N/A 	                                                SYMBOL SHIFT 	Modifies the other keys you’ll press with it
- Left/Right ALT  	        Green cursor in NextBASIC/E cursor on 48K BASICs 	    EXTEND MODE 	Presses SYMBOL SHIFT and CAPS SHIFT together
- Cursor Keys 	            Cursor will move 	                                    CAPS SHIFT + / 5,6,7,8 	Emulates the ZX Spectrum + cursor keys
- PgUp 	                    Reset Inverse Video for 48K / See Chp. 1 for NextBASIC 	CAPS SHIFT + 3 	Emulates the ZX Spectrum + TRUE VIDEO key
- PgDn 	                    Sets Inverse Video for 48K / See Chp. 1 for NextBASIC 	CAPS SHIFT + 4 	Emulates the ZX Spectrum + INVERSE VIDEO key
- ESC 	                    Either Space or BREAK INTO PROGRAM if running a Next/Sinclair BASIC program 	CAPS SHIFT + SPACE 	Breaks the execution of a program
- Left Windows Key / Home 	{ on NextBASIC / TO on 48K BASIC 	                    SYMBOL SHIFT + F 	Prints a symbol / token
+ Left/Right Shift 	      N/A 	                                                  CAPS SHIFT 	      Modifies the other keys you’ll press with it
+ Left/Right CTRL 	        N/A 	                                                  SYMBOL SHIFT 	    Modifies the other keys you’ll press with it
+ Left/Right ALT  	        Green cursor in NextBASIC/E cursor on 48K BASICs 	      EXTEND MODE 	    Presses SYMBOL SHIFT and CAPS SHIFT together
+ Cursor Keys 	            Cursor will move 	                                      CAPS SHIFT + / 5,6,7,8 	Emulates the ZX Spectrum + cursor keys
+ PgUp 	                  Reset Inverse Video for 48K / See Chp. 1 for NextBASIC 	CAPS SHIFT + 3 	  Emulates the ZX Spectrum + TRUE VIDEO key
+ PgDn 	                  Sets Inverse Video for 48K / See Chp. 1 for NextBASIC 	CAPS SHIFT + 4 	  Emulates the ZX Spectrum + INVERSE VIDEO key
+ ESC 	                    Either Space or BREAK INTO PROGRAM i           	        CAPS SHIFT + SPACE 	Breaks the execution of a program
+ Left Windows Key / Home 	{ on NextBASIC / TO on 48K BASIC 	                      SYMBOL SHIFT + F 	Prints a symbol / token
  Right Windows Key / End 	} on NextBASIC / THEN on 48K BASIC 	                    SYMBOL SHIFT + G 	Prints a symbol / token
- Scroll Lock 	            Magenta Cursor on NextBASIC / G cursor on 48K Basic 	CAPS SHIFT + 9 / GRAPH key on +/128 	Sets / resets GRAPHICS mode
- PrtScr 	                    (c) symbol 	                                            EXTEND MODE + P 	Prints a symbol
+ Scroll Lock 	            Magenta Cursor on NextBASIC / G cursor on 48K Basic 	  CAPS SHIFT + 9 /  GRAPH key on +/128 	Sets / resets GRAPHICS mode
+ PrtScr 	                (c) symbol 	                                            EXTEND MODE + P 	Prints a symbol
  ‘,” key 	                Double Quotes ‘”‘ 	                                    SYMBOL SHIFT + P 	Emulates the ZX Spectrum + ” key
- , key 	                    Comma “,” 	                                            SYMBOL SHIFT + N 	Emulates the ZX Spectrum + , key
- . key 	                    Period “.” 	                                            SYMBOL SHIFT + M 	Emulates the ZX Spectrum + . key
+ , key 	                  Comma “,” 	                                            SYMBOL SHIFT + N 	Emulates the ZX Spectrum + , key
+ . key 	                  Period “.” 	                                            SYMBOL SHIFT + M 	Emulates the ZX Spectrum + . key
  ;,: key 	                Semicolon “;” 	                                        SYMBOL SHIFT + O 	Emulates the ZX Spectrum + ; key
  [,{ key 	                [ 	                                                    SYMBOL SHIFT + Y 	Prints a symbol
  ],} key 	                ] 	                                                    SYMBOL SHIFT + U 	Prints a symbol
  /,? key 	                Forward slash “/” 	                                    SYMBOL SHIFT + V 	Prints a symbol
- \,| key 	                Backward slash “\” on NextBASIC / STEP on 48K BASIC 	SYMBOL SHIFT + D 	Prints a symbol / token
- =,+ key 	                Equals sign “=” 	                                    SYMBOL SHIFT + L 	Prints a symbol
+ \,| key 	                Backward slash “\” on NextBASIC / STEP on 48K BASIC 	  SYMBOL SHIFT + D 	Prints a symbol / token
+ =,+ key 	                Equals sign “=” 	                                      SYMBOL SHIFT + L 	Prints a symbol
  -,_ key 	                Minus sign “-“ 	                                        SYMBOL SHIFT + J 	Prints a symbol
- `,~ key 	                Single quote “‘” 	                                    SYMBOL SHIFT + 7 	Prints a symbol
+ `,~ key 	                Single quote “‘” 	                                    S YMBOL SHIFT + 7 	Prints a symbol
  Ins 	                    Tilde “~” in NextBASIC / STOP in 48K BASIC 	            SYMBOL SHIFT + A 	Prints a symbol / token
  Del 	                    Question mark “?” 	                                    SYMBOL SHIFT + C 	Prints a symbol
  Numeric Keypad keys 	    Number on keyboard 	                                    0…9 	            Prints a number
  Numeric “/” 	            Forward slash “/” 	                                    SYMBOL SHIFT + V 	Prints a symbol
- Numeric “*” 	            Asterisk “*” 	                                        SYMBOL SHIFT + B 	Prints a symbol
+ Numeric “*” 	            Asterisk “*” 	                                          SYMBOL SHIFT + B 	Prints a symbol
  Numeric “-“ 	            Minus “-“ 	                                            SYMBOL SHIFT + J 	Prints a symbol
- Numeric “+” 	            Plus “+” 	                                            SYMBOL SHIFT + K 	Prints a symbol
+ Numeric “+” 	            Plus “+” 	                                              SYMBOL SHIFT + K 	Prints a symbol
  Numeric “.” 	            Period “.” 	                                            SYMBOL SHIFT + M 	Prints a symbol
- Numeric “Enter” 	        ENTER 	                                                ENTER 	Presses Enter
- ENTER 	                    ENTER 	                                                ENTER 	Presses Enter
- A…Z keys 	                A…Z 	A…Z 	Prints character
+ Numeric “Enter” 	        ENTER 	                                                ENTER 	          Presses Enter
+ ENTER 	                  ENTER 	                                                ENTER 	          Presses Enter
+ A…Z keys 	              A…Z 	A…Z 	Prints character
  
  */
  
