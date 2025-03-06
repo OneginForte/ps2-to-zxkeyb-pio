@@ -28,8 +28,8 @@
 -  CLOCK  `GPIO3`
 
 Для порта PIO-USB: 
-- D+ `GPIO21` 
-- D- `GPIO22`
+- D+ `GPIO0`` 
+- D- `GPIO1``
 
 Переназначение выводов порта DEBUG: 
 - UART_TX_PIN `GPIO16` 

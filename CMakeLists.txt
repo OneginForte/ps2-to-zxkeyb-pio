@@ -60,11 +60,12 @@ if (NOT PICO_SDK_VERSION_STRING VERSION_LESS "2.1.0")
 endif()
 
 project(ps2x2pico C CXX ASM)
+SET(BUILD_NAME "${PROJECT_NAME}-${FLASH_SIZE}-${CPU_MHZ}")
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
-add_executable(ps2x2pico src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2ms.c src/ps2in.c)
+add_executable(ps2x2pico src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2ms.c src/ps2in.c src/ws2812.c)
 
 pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2out.pio)
 pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
@@ -99,8 +100,8 @@ if (MS_RATE_HOST_CONTROL)
     add_compile_definitions(MS_RATE_HOST_CONTROL)
 endif()
 
-pico_set_program_name(ps2x2pico "ps2x2pico")
-pico_set_program_version(ps2x2pico "2.2")
+pico_set_program_name(ps2x2pico "ZX keyboard adapter")
+pico_set_program_version(ps2x2pico "0.6")
 
 pico_enable_stdio_uart(ps2x2pico 0)
 pico_enable_stdio_usb(ps2x2pico 0)
@@ -109,4 +110,5 @@ add_subdirectory("./Pico-PIO-USB" pico_pio_usb)
 target_include_directories(ps2x2pico PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
 target_link_libraries(ps2x2pico pico_stdlib hardware_pio pico_pio_usb tinyusb_host tinyusb_board)
 
+target_link_options(${PROJECT_NAME} PRIVATE -Xlinker --print-memory-usage --data-sections)
 pico_add_extra_outputs(ps2x2pico)

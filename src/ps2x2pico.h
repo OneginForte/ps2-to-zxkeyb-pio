@@ -185,7 +185,8 @@ void ps2in_set(ps2in* this, u8 command, u8 byte);
 
 
 //#define LEDPIN 25 //  Black pico
-#define LEDPIN 25 //  zero pico
+#define LEDPIN 16 //  zero pico
+#define LEDBR 12
 
 #define KEYBOARD_REPORT_SIZE    20
 

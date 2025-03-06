@@ -541,13 +541,15 @@ void tuh_hid_mount_cb(u8 dev_addr, u8 instance, u8 const* desc_report, u16 desc_
         }
       }
     }
-    board_led_write(1);
+    ws2812_set_rgb(0, LEDBR, LEDBR);
+    //board_led_write(1);
   }
 }
 
 void tuh_hid_umount_cb(u8 dev_addr, u8 instance) {
   printf("HID(%d,%d) unmounted\n", dev_addr, instance);
-  board_led_write(0);
+  ws2812_set_rgb(LEDBR, 0, 0);
+  //board_led_write(0);
 
   for(u8 i = 0; i < 8; i++) {
     if(keyboards[i].dev_addr == dev_addr && keyboards[i].instance == instance) {

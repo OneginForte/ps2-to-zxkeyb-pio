@@ -70,6 +70,11 @@ int main() {
 
   gpio_init(LEDPIN);
   gpio_set_dir(LEDPIN, GPIO_OUT);
+
+  ws2812_init();
+  //ws2812_reset();
+
+  ws2812_set_rgb(0, 0, LEDBR);  
   
   //memset(ps2buffer, 0, KBD_BUFFER_SIZE);
   //nespad_begin(clock_get_hz(clk_sys) / 1000, NES_GPIO_CLK, NES_GPIO_DATA, NES_GPIO_LAT);
