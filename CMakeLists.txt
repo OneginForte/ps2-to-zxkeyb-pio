@@ -45,7 +45,7 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-set(PICO_BOARD pico CACHE STRING "Board type")
+set(PICO_BOARD waveshare_rp2040_zero CACHE STRING "Board type")
 
 set(MS_RATE_DEFAULT 100 CACHE STRING "Default mouse sample rate")
 set(MS_RATE_HOST_CONTROL ON CACHE BOOL "Allow the host to configure the mouse sample rate")
@@ -71,7 +71,7 @@ pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2out.pio)
 pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
 
 # print memory usage, enable all warnings
-target_link_options(ps2x2pico PRIVATE -Xlinker --print-memory-usage)
+target_link_options(ps2x2pico PRIVATE -Xlinker --print-memory-usage --data-sections)
 target_compile_options(ps2x2pico PRIVATE -Wall -Wextra)
 
 target_sources(ps2x2pico PRIVATE
@@ -110,5 +110,4 @@ add_subdirectory("./Pico-PIO-USB" pico_pio_usb)
 target_include_directories(ps2x2pico PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
 target_link_libraries(ps2x2pico pico_stdlib hardware_pio pico_pio_usb tinyusb_host tinyusb_board)
 
-target_link_options(ps2x2pico PRIVATE -Xlinker --stats --print-memory-usage --data-sections)
 pico_add_extra_outputs(ps2x2pico)

@@ -37,6 +37,7 @@
 #include "tusb.h"
 #include "hardware/pio.h"
 #include "pico/util/queue.h"
+#include "ws2812.h"
 
 typedef int8_t s8;
 typedef int16_t s16;

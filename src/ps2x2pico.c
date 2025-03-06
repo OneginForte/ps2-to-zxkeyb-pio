@@ -31,7 +31,7 @@
 #include "pio_usb.h"
 #include "hardware/clocks.h"
 #include "pico/stdlib.h"
-#include "ws2812.h"
+
 
 
 // core1: handle host events
