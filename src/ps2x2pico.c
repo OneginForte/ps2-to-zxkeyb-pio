@@ -31,6 +31,7 @@
 #include "pio_usb.h"
 #include "hardware/clocks.h"
 #include "pico/stdlib.h"
+#include "ws2812.h"
 
 
 // core1: handle host events
@@ -61,9 +62,9 @@ int main() {
   set_sys_clock_khz(240000, true);
   board_init();
   stdio_init_all();
-  
+  #if DEBUG==1
   printf("\n%s-%s\n", PICO_PROGRAM_NAME, PICO_PROGRAM_VERSION_STRING);
-  
+  #endif
    // all USB task run in core1
   multicore_reset_core1(); 
   multicore_launch_core1(core1_main);
@@ -74,7 +75,7 @@ int main() {
   ws2812_init();
   //ws2812_reset();
 
-  ws2812_set_rgb(0, 0, LEDBR);  
+  //ws2812_set_rgb(0, 0, LEDBR);  
   
   //memset(ps2buffer, 0, KBD_BUFFER_SIZE);
   //nespad_begin(clock_get_hz(clk_sys) / 1000, NES_GPIO_CLK, NES_GPIO_DATA, NES_GPIO_LAT);
@@ -92,6 +93,8 @@ int main() {
 }
 
 void reset() {
+  #if DEBUG==1
   printf("\n\n *** PANIC via tinyusb: watchdog reset!\n\n");
+  #endif
   watchdog_enable(100, false);
 }

@@ -110,5 +110,5 @@ add_subdirectory("./Pico-PIO-USB" pico_pio_usb)
 target_include_directories(ps2x2pico PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
 target_link_libraries(ps2x2pico pico_stdlib hardware_pio pico_pio_usb tinyusb_host tinyusb_board)
 
-target_link_options(${PROJECT_NAME} PRIVATE -Xlinker --print-memory-usage --data-sections)
+target_link_options(ps2x2pico PRIVATE -Xlinker --stats --print-memory-usage --data-sections)
 pico_add_extra_outputs(ps2x2pico)
