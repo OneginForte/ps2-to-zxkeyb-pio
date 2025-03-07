@@ -41,7 +41,7 @@ void SetKey(bool data){
 void key_on(uint8_t code) // клавиша нажата
 {
 
-            gpio_put(LEDPIN, 1);//led
+            //gpio_put(LEDPIN, 1);//led
             ws2812_set_rgb(0, 1, 0);
     
             if (flag_e0==true){
@@ -82,7 +82,7 @@ void key_on(uint8_t code) // клавиша нажата
 void key_off(uint8_t code)// клавиша отпущена
 {
             //kb_set_leds(0);// 0. Num lock 1.  Caps lock 2.  Scroll
-            gpio_put(LEDPIN, 0);//led
+            //gpio_put(LEDPIN, 0);//led
             ws2812_set_rgb(0, 0, 1); 
 
             if (flag_e0==true){

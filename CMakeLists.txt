@@ -67,7 +67,6 @@ pico_sdk_init()
 
 add_executable(ps2x2pico src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2ms.c src/ps2in.c src/ws2812.c)
 
-pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2out.pio)
 pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
 
 # print memory usage, enable all warnings
@@ -80,16 +79,10 @@ target_sources(ps2x2pico PRIVATE
  )
 target_compile_definitions(ps2x2pico PRIVATE PIO_USB_USE_TINYUSB)
 
-### PS/2 output
-#add_compile_definitions(LVOUT=13) # Level shifter pull-up voltage
-#add_compile_definitions(KBOUT=11) # Keyboard data GPIO11, clock is GPIO12
-#add_compile_definitions(MSOUT=14) # Mouse data GPIO14, clock is GPIO15
-
 ### PS/2 input
-#add_compile_definitions(LVIN=6) # Level shifter pull-up voltage
-add_compile_definitions(KBIN=3) # Keyboard data GPIO3, clock pin is GPIO4
-add_compile_definitions(MSIN=5) # Mouse data GPIO6, clock pin is GPIO7
-add_compile_definitions(PIOH=0)
+add_compile_definitions(KBIN=2) # Keyboard data GPIO3, clock pin is GPIO2
+#add_compile_definitions(MSIN=4) # Mouse data GPIO4, clock pin is GPIO5
+add_compile_definitions(PIOH=0) # PioUSB DP pin GPIO0
 add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=-1)
 add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=-1)
 

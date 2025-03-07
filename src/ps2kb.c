@@ -109,7 +109,9 @@ alarm_id_t repeater;
 void kb_send(u8 byte) {
   if(byte != KB_MSG_RESEND_FE) last_byte_sent = byte;
   printf("kb > host %02x\n", byte);
+  ws2812_set_rgb(0, 12, 0);
   queue_try_add(&kb_out.qbytes, &byte);
+  ws2812_set_rgb(0, 0, 0);
 }
 
 void kb_resend_last() {
@@ -169,9 +171,9 @@ void kb_set_defaults() {
   delay_ms = 500;
   blinking = true;
   add_alarm_in_ms(100, blink_callback, NULL, false);
-  #ifdef KBIN
-    ps2in_reset(&kb_in);
-  #endif
+  //#ifdef KBIN
+  ps2in_reset(&kb_in);
+  //#endif
 }
 
 s64 repeat_cb() {
@@ -335,6 +337,7 @@ void kb_send_key(u8 key, bool is_key_pressed, u8 modifiers) {
       printf("INTERNAL ERROR! SCAN CODE SET = %u\n", scancodeset);
       break;
   }
+  
 }
 
 bool kb_task() {
@@ -346,8 +349,7 @@ bool kb_task() {
 }
 
 void kb_init(u8 gpio_in) {
-  //ps2out_init(&kb_out, &kb_receive);
-  //#ifdef KBIN
+
   /*инициализация пинов пико для управления 8816 по порядку
   AX0 первый 11 штук */
   for (size_t i = 0; i < 11; i++)
@@ -379,9 +381,7 @@ void kb_init(u8 gpio_in) {
   //queue_init(&kb_out.qpacks, sizeof(u8) * 9, 16);
 
   ps2in_init(&kb_in, pio1, gpio_in);
-  //#else
-  //  (void)gpio_in;
-  //#endif
+
   kb_set_defaults();
   //kb_send(KB_MSG_SELFTEST_PASSED_AA);
 
