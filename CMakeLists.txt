@@ -38,26 +38,24 @@ SET(BUILD_NAME "${PROJECT_NAME}-${FLASH_SIZE}-${CPU_MHZ}")
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
-add_executable(ps2hidtozx src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2ms.c src/ps2in.c src/ws2812.c)
+add_executable(${PROJECT_NAME} src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2ms.c src/ps2in.c src/ws2812.c)
 
-pico_generate_pio_header(ps2hidtozx ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
+pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
 
 # print memory usage, enable all warnings
-target_link_options(ps2hidtozx PRIVATE -Xlinker --print-memory-usage --data-sections)
-target_compile_options(ps2hidtozx PRIVATE -Wall -Wextra)
+target_link_options(${PROJECT_NAME} PRIVATE -Xlinker --print-memory-usage --data-sections)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
 
-target_sources(ps2hidtozx PRIVATE
+target_sources(${PROJECT_NAME} PRIVATE
  # can use 'tinyusb_pico_pio_usb' library later when pico-sdk is updated
  ${PICO_TINYUSB_PATH}/src/portable/raspberrypi/pio_usb/hcd_pio_usb.c
  )
-target_compile_definitions(ps2hidtozx PRIVATE PIO_USB_USE_TINYUSB)
+target_compile_definitions(${PROJECT_NAME} PRIVATE PIO_USB_USE_TINYUSB)
 
 ### PS/2 input
 add_compile_definitions(KBIN=2) # Keyboard data GPIO3, clock pin is GPIO2
 #add_compile_definitions(MSIN=4) # Mouse data GPIO4, clock pin is GPIO5
 add_compile_definitions(PIOH=0) # PioUSB DP pin GPIO0
-add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=-1)
-add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=-1)
 
 ### LEDPIN 
 add_compile_definitions(LEDPIN=16) #zero 16, black 25 
@@ -76,6 +74,9 @@ add_compile_definitions(CSMT=12)
 add_compile_definitions(RSTMT=13)
 add_compile_definitions(DATMT=14)
 
+### UART pinout for debug
+add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=-1)
+add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=-1)
 
 add_compile_definitions(PICO_PANIC_FUNCTION=reset)
 
@@ -84,14 +85,14 @@ if (MS_RATE_HOST_CONTROL)
     add_compile_definitions(MS_RATE_HOST_CONTROL)
 endif()
 
-pico_set_program_name(ps2hidtozx "ZX keyboard adapter")
-pico_set_program_version(ps2hidtozx "0.6")
+pico_set_program_name(${PROJECT_NAME} "ZX keyboard adapter")
+pico_set_program_version(${PROJECT_NAME} "0.6")
 
-pico_enable_stdio_uart(ps2hidtozx 0)
-pico_enable_stdio_usb(ps2hidtozx 0)
+pico_enable_stdio_uart(${PROJECT_NAME} 0)
+pico_enable_stdio_usb(${PROJECT_NAME} 0)
 
 add_subdirectory("./Pico-PIO-USB" pico_pio_usb)
-target_include_directories(ps2hidtozx PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
-target_link_libraries(ps2hidtozx pico_stdlib hardware_pio pico_pio_usb tinyusb_host tinyusb_board)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
+target_link_libraries(${PROJECT_NAME} pico_stdlib hardware_pio tinyusb_host tinyusb_board pico_pio_usb)
 
-pico_add_extra_outputs(ps2hidtozx)
+pico_add_extra_outputs(${PROJECT_NAME})
