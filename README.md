@@ -43,4 +43,5 @@
 ![Connection](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/Real/doc/conn.PNG)  
 
 В папке Board размещена актуальная схема и герберы платы.
-(https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/Real/doc/MT8816-keyb.png)  
+
+![Connection](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/Real/doc/MT8816-keyb.png)  
