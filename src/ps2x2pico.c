@@ -73,9 +73,9 @@ int main() {
 
   //gpio_init(LEDPIN);
   //gpio_set_dir(LEDPIN, GPIO_OUT);
+  
   ws2812_init();
   //ws2812_reset();
-
   ws2812_set_rgb(LEDBR, 0, 0); 
   
   //memset(ps2buffer, 0, KBD_BUFFER_SIZE);

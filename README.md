@@ -6,7 +6,7 @@
 - [billgilbert7000](https://github.com/billgilbert7000/usb_to_zx_spectrum)
 - [MikhaelKaa](https://github.com/MikhaelKaa/usb2spectrum)
 
-### Для корректной работы TinyUSB необходим [патч](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/main/tinyusb-0.17.0-dualusb.patch) из корня. 
+### Для корректной работы TinyUSB необходим [патч](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/Real/tinyusb-0.17.0-dualusb.patch) из корня. 
 
 ### Используемые выводы PICO 
 
@@ -32,8 +32,7 @@
 - D- `GPIO1``
 
 Переназначение выводов порта DEBUG: 
-- UART_TX_PIN `GPIO16` 
-- UART_RX_PIN `GPIO17`
+- В данной ревизии платы не используются
 
 
 Соединение выводов MT8816 для Пентагон 128
@@ -41,4 +40,7 @@
 На порту Y выводы с Dx соединяются 1 к 1, как на изображении. 
 Ремап сделан программно.
 
-![Connection](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/main/doc/conn.PNG)  
+![Connection](https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/Real/doc/conn.PNG)  
+
+В папке Board размещена актуальная схема и герберы платы.
+(https://github.com/OneginForte/ps2-to-zxkeyb-pio/blob/Real/doc/MT8816-keyb.png)  

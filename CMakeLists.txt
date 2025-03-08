@@ -41,10 +41,14 @@ pico_sdk_init()
 add_executable(${PROJECT_NAME} src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2ms.c src/ps2in.c src/ws2812.c)
 
 pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
+pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/src/ws2812.pio)
 
 # print memory usage, enable all warnings
-target_link_options(${PROJECT_NAME} PRIVATE -Xlinker --print-memory-usage --data-sections)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
+target_link_options(${PROJECT_NAME} PRIVATE 
+        -Xlinker --print-memory-usage --data-sections)
+target_compile_options(${PROJECT_NAME} PRIVATE 
+        -Wall 
+        -Wextra)
 
 target_sources(${PROJECT_NAME} PRIVATE
  # can use 'tinyusb_pico_pio_usb' library later when pico-sdk is updated
@@ -53,31 +57,39 @@ target_sources(${PROJECT_NAME} PRIVATE
 target_compile_definitions(${PROJECT_NAME} PRIVATE PIO_USB_USE_TINYUSB)
 
 ### PS/2 input
-add_compile_definitions(KBIN=2) # Keyboard data GPIO3, clock pin is GPIO2
-#add_compile_definitions(MSIN=4) # Mouse data GPIO4, clock pin is GPIO5
-add_compile_definitions(PIOH=0) # PioUSB DP pin GPIO0
-
-### LEDPIN 
-add_compile_definitions(LEDPIN=16) #zero 16, black 25 
-add_compile_definitions(WS2812_PIN=16) # for WS2812 driver 23-black pico 16-zero pico
-
+target_compile_definitions(${PROJECT_NAME} PRIVATE 
+KBIN=2 # Keyboard data GPIO2, clock pin is GPIO3
+#MSIN=4 # Mouse data GPIO4, clock pin is GPIO5
+)
+### PIO_USB port definition
+target_compile_definitions(${PROJECT_NAME} PRIVATE 
+PIOH=0 # PioUSB DP pin GPIO0
+)
+### LEDPIN
+target_compile_definitions(${PROJECT_NAME} PRIVATE 
+LEDPIN=16 #zero 16, black 25 
+WS2812_PIN=16 # for WS2812 driver 23-black pico 16-zero pico
+)
 ### MT8816 pinout
-add_compile_definitions(AX0=4)
-add_compile_definitions(AX1=5)
-add_compile_definitions(AX2=6)
-add_compile_definitions(AX3=7)
-add_compile_definitions(AY0=8)
-add_compile_definitions(AY1=9)
-add_compile_definitions(AY2=10)
-add_compile_definitions(STBMT=11)
-add_compile_definitions(CSMT=12)
-add_compile_definitions(RSTMT=13)
-add_compile_definitions(DATMT=14)
-
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+AX0=4
+AX1=5
+AX2=6
+AX3=7
+AY0=8
+AY1=9
+AY2=10
+STBMT=11
+CSMT=12
+RSTMT=13
+DATMT=14
+)
 ### UART pinout for debug
-add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=-1)
-add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=-1)
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+PICO_DEFAULT_UART_TX_PIN=-1
+PICO_DEFAULT_UART_RX_PIN=-1
 
+)
 add_compile_definitions(PICO_PANIC_FUNCTION=reset)
 
 add_compile_definitions(MS_RATE_DEFAULT=${MS_RATE_DEFAULT})
@@ -92,6 +104,7 @@ pico_enable_stdio_uart(${PROJECT_NAME} 0)
 pico_enable_stdio_usb(${PROJECT_NAME} 0)
 
 add_subdirectory("./Pico-PIO-USB" pico_pio_usb)
+
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
 target_link_libraries(${PROJECT_NAME} 
         # Standard Pico
