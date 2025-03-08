@@ -115,7 +115,7 @@ uint8_t const mod2ps2_3[] = {
 
 // break codes in set 1 are created from the make code by adding 128 (0x80) or in other words set the msb.
 // this is true even for the extended codes (but 0xe0 stays 0xe0) and the special multi byte codes for print screen and pause
-uint8_t const hid2ps2_1[] = {
+const uint8_t __in_flash() hid2ps2_1[] = {
   // 0x00 - 0x0f
   0, 0, 0, 0, // NONE
   0x1e, // A
@@ -239,7 +239,7 @@ uint8_t const hid2ps2_1[] = {
   0x76  // F24
 };
 
-uint8_t const hid2ps2_2[] = {
+const uint8_t __in_flash() hid2ps2_2[] = {
   // 0x00 - 0x0f
   0, 0, 0, 0, // NONE
   0x1c, // A
@@ -363,7 +363,7 @@ uint8_t const hid2ps2_2[] = {
   0x5f  // F24
 };
 
-uint8_t const hid2ps2_3[] = {
+const uint8_t __in_flash() hid2ps2_3[] = {
   // 0x00 - 0x0f
   0, 0, 0, 0, // NONE
   0x1C,       // A

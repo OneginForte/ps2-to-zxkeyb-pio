@@ -52,7 +52,7 @@ typedef uint64_t u64;
 #define KBD_BUFFER_SIZE 16
 
 
-extern const enum zx_key{
+extern const enum zx_key{  //Pentagon
     NC=0xFF,
     //      ряд X0
     SP=0x00, //SPACE
@@ -170,23 +170,6 @@ void ps2in_set(ps2in* this, u8 command, u8 byte);
 #define IS_VALID_KEY(key) (key <= HID2PS2_IDX_MAX || (key >= HID_KEY_CONTROL_LEFT && key <= HID_KEY_GUI_RIGHT))
 #define IS_MOD_KEY(key) (key >= HID_KEY_CONTROL_LEFT && key <= HID_KEY_GUI_RIGHT)
 
-// пины пико для управления 8816
-
-#define AX0 4
-#define AX1 5
-#define AX2 6
-#define AX3 7
-#define AY0 8
-#define AY1 9
-#define AY2 10
-#define STBMT 11
-#define CSMT  12
-#define RSTMT 13
-#define DATMT 14
-
-
-//#define LEDPIN 25 //  Black pico
-#define LEDPIN 16 //  zero pico
 #define LEDBR 12
 
 #define KEYBOARD_REPORT_SIZE    20

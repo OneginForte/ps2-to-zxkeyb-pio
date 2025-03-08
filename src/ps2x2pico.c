@@ -40,7 +40,7 @@ void core1_main() {
   tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT);
   tuh_init(0);
 
-  //pio_usb_host_add_port(21, PIO_USB_PINOUT_DPDM);
+  //pio_usb_host_add_port(21, PIO_USB_PINOUT_DPDM); //maybe add another physical usb port
 
   // Use tuh_configure() to pass pio configuration to the host stack
   // Note: tuh_configure() must be called before

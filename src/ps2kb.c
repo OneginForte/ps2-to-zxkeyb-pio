@@ -108,14 +108,17 @@ alarm_id_t repeater;
 
 void kb_send(u8 byte) {
   if(byte != KB_MSG_RESEND_FE) last_byte_sent = byte;
+  #if DEBUG==1
   printf("kb > host %02x\n", byte);
-  ws2812_set_rgb(0, 12, 0);
+  #endif
   queue_try_add(&kb_out.qbytes, &byte);
-  ws2812_set_rgb(0, 0, 0);
+  ws2812_set_rgb(0, LEDBR, 0);
 }
 
 void kb_resend_last() {
+  #if DEBUG==1 
   printf("r: k>h %x\n", last_byte_sent);
+  #endif
   queue_try_add(&kb_out.qbytes, &last_byte_sent);
 }
 
@@ -147,7 +150,9 @@ void kb_set_leds(u8 byte) {
 
 s64 blink_callback() {
   if(blinking) {
+    #if DEBUG==1
     printf("Blinking keyboard LEDs\n");
+    #endif
     kb_set_leds(KEYBOARD_LED_NUMLOCK | KEYBOARD_LED_CAPSLOCK | KEYBOARD_LED_SCROLLLOCK);
     blinking = false;
     return 500000;
@@ -158,11 +163,15 @@ s64 blink_callback() {
 
 void set_scancodeset(u8 scs) {
   scancodeset = scs;
+  #if DEBUG==1
   printf("scancodeset set to %u\n", scancodeset);
+  #endif
 }
 
 void kb_set_defaults() {
+  #if DEBUG==1
   printf("Setting defaults for keyboard\n");
+  #endif
   kbhost_state = KBH_STATE_IDLE;
   scs3_mode = SCS3_MODE_MAKE_BREAK_TYPEMATIC;
   set_scancodeset(2);
@@ -217,7 +226,9 @@ void kb_send_key_scs1(u8 key, bool is_key_pressed, bool is_ctrl) {
   u8 scan_code = IS_MOD_KEY(key) ? mod2ps2_1[key - HID_KEY_CONTROL_LEFT] : hid2ps2_1[key];
 
   if(!scan_code) {
+    #if DEBUG==1
     LOG_UNMAPPED_KEY
+    #endif
     return;
   }
 
@@ -312,12 +323,16 @@ void kb_send_key_scs3(u8 key, bool is_key_pressed) {
 // bool is_key_pressed - state of key: true=pressed, false=released
 void kb_send_key(u8 key, bool is_key_pressed, u8 modifiers) {
   if(!kb_enabled) {
+    #if DEBUG==1
     printf("WARNING: Keyboard disabled, ignoring key press %u\n", key);
+    #endif
     return;
   }
 
   if(!IS_VALID_KEY(key)) {
+    #if DEBUG==1
     printf("INFO: Ignoring hid key 0x%x by design.\n", key);
+    #endif
     return;
   }
   
@@ -334,7 +349,9 @@ void kb_send_key(u8 key, bool is_key_pressed, u8 modifiers) {
       kb_send_key_scs3(key, is_key_pressed);
       break;
     default:
+      #if DEBUG==1
       printf("INTERNAL ERROR! SCAN CODE SET = %u\n", scancodeset);
+      #endif
       break;
   }
   
@@ -342,9 +359,7 @@ void kb_send_key(u8 key, bool is_key_pressed, u8 modifiers) {
 
 bool kb_task() {
   keyboard_task(&kb_out);
-  //#ifdef KBIN
   ps2in_task(&kb_in, &kb_out);
-  //#endif
   return kb_enabled;// TODO: return value can probably be void
 }
 
@@ -378,7 +393,7 @@ void kb_init(u8 gpio_in) {
   //gpio_put(CSMT, 1); //выбор чипа
 
   queue_init(&kb_out.qbytes, sizeof(u8), 9);
-  //queue_init(&kb_out.qpacks, sizeof(u8) * 9, 16);
+
 
   ps2in_init(&kb_in, pio1, gpio_in);
 
