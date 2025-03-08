@@ -62,27 +62,28 @@ int main() {
   set_sys_clock_khz(240000, true);
   board_init();
   stdio_init_all();
+  
   #if DEBUG==1
   printf("\n%s-%s\n", PICO_PROGRAM_NAME, PICO_PROGRAM_VERSION_STRING);
   #endif
+
    // all USB task run in core1
   multicore_reset_core1(); 
   multicore_launch_core1(core1_main);
 
   //gpio_init(LEDPIN);
   //gpio_set_dir(LEDPIN, GPIO_OUT);
-
   ws2812_init();
   //ws2812_reset();
 
   ws2812_set_rgb(LEDBR, 0, 0); 
   
   //memset(ps2buffer, 0, KBD_BUFFER_SIZE);
+  //Nespad
   //nespad_begin(clock_get_hz(clk_sys) / 1000, NES_GPIO_CLK, NES_GPIO_DATA, NES_GPIO_LAT);
-  
+  //595 driver
   //init_74hc595();
-  gpio_init(2);
-  gpio_set_dir(2, GPIO_IN);
+
   kb_init(KBIN); //KBIN);
   //ms_init(MSIN); //MSIN);
 

@@ -93,6 +93,14 @@ pico_enable_stdio_usb(${PROJECT_NAME} 0)
 
 add_subdirectory("./Pico-PIO-USB" pico_pio_usb)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
-target_link_libraries(${PROJECT_NAME} pico_stdlib hardware_pio tinyusb_host tinyusb_board pico_pio_usb)
+target_link_libraries(${PROJECT_NAME} 
+        # Standard Pico
+        pico_stdlib
+        pico_multicore 
+        hardware_pio
+        # TinyUSB 
+        tinyusb_host 
+        tinyusb_board 
+        pico_pio_usb)
 
 pico_add_extra_outputs(${PROJECT_NAME})
