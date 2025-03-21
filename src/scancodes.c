@@ -614,19 +614,27 @@ const uint8_t __in_flash() table_key_zx_hid[256] =
   NC, NC,/*7F*/   
  };
 
- const uint8_t __in_flash() macro1[]  = { 0x7C, 0xF0, 0x7C, 0x37, 0 }; //*"A : "
- const uint8_t __in_flash() macro2[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RANDOMIZE USR 15616
- const uint8_t __in_flash() macro3[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageUP
- const uint8_t __in_flash() macro4[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //PageDown
- const uint8_t __in_flash() macro5[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RUN "BOOT" 
- const uint8_t __in_flash() macro6[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 }; //RUN ""
+
+ const uint8_t __in_flash() macro1[]  = { 0x14, 0x32, 0xf0, 0x32, 0xf0, 0x14, 
+                                          0x14, 0x4d, 0xf0, 0x4d, 0xf0, 0x2d, 
+                                          0xf0, 0x14, 0x1c, 0xf0, 0x1c, 0x14,
+                                          0x1a, 0xf0, 0x1a, 0xf0, 0x14, 0x14, 
+                                          0x4d, 0xf0, 0x4d, 0xf0, 0x2d, 0xf0, 0x14,  }; //*"A : "
+ const uint8_t __in_flash() macro2[]  = { 0x08, 0xF0, 0xe0, 0x37, 0 }; //RANDOMIZE USR 15616
+ const uint8_t __in_flash() macro3[]  = { 0xE0, 0x7D, 0xE0, 0xF0, 0x7D, 0 }; //PageUP
+ const uint8_t __in_flash() macro4[]  = { 0xE0, 0x7A, 0xE0, 0xF0, 0x7A, 0 }; //PageDown
+ const uint8_t __in_flash() macro5[]  = { 0x2d, 0xf0, 0x14, 0x4d, 0xf0, 0x4d, 
+                        0xf0, 0x14, 0x32, 0xf0, 0x32, 0x44, 0xf0, 0x44, 0x44, 
+                        0xf0, 0x44, 0x2c, 0xf0, 0x2c, 0x14, 0x4d, 0xf0, 0x4d, 
+                        0xf0, 0x14, 0 }; //RUN "BOOT" 
+ const uint8_t __in_flash() macro6[]  = { 0x2d, 0xf0, 0x14, 0x4d, 0xf0, 0x4d, 
+                        0xf0,0x2d, 0xf0, 0x14, 0x4d, 0xf0, 0x4d, 0xf0, 0 }; //RUN ""
  const uint8_t __in_flash() macro7[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
  const uint8_t __in_flash() macro8[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
  const uint8_t __in_flash() macro9[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
  const uint8_t __in_flash() macro10[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
  const uint8_t __in_flash() macro11[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
  const uint8_t __in_flash() macro12[]  = { 0xe0, 0x2a, 0xe0, 0x37, 0 };
- 
  
  /*
  KEY 	MAKE 	    BREAK 	    KEY 	  MAKE 	BREAK
@@ -732,7 +740,7 @@ const uint8_t __in_flash() table_key_zx_hid[256] =
  // X5 KA9  A   S   D   F   G  H   J   K   L   EN  KA14 X1
  // X4 KA8 CS   Z   X   C   V  B   N   M   SS  SP  KA15 X0
  
- 
+
  
  const uint8_t __in_flash() table_key_zx_ps[][4]  =
  {
@@ -813,21 +821,21 @@ const uint8_t __in_flash() table_key_zx_hid[256] =
  {_C, SS, _V, SS},/*(4A) ? SS+C */ /*E0 4A Keypad / SS+V */
  {_L, NC, NC, NC},/*(4B) L */
  {_Z, SS, NC, NC},/*(4С) : SS+Z ; SS+O */ // :
- {_P, NC, NC, NC},/*(4D) P*/
- {_J, SS, NC, NC},/*(4E) - SS+J*/
+ {_P, NC, NC, NC},/*(4D) P */
+ {_J, SS, NC, NC},/*(4E) - SS+J */
  {NC, NC, NC, NC},/*(4F)*/
  {CS, NC, NC, NC},/*(50) F22 CTRL  / CS ZX  */ 
  {NC, NC, NC, NC},/*(51)*/
  {_P, SS, NC, NC},/*(52) SS+P  "*/ // ' APOSTROPHE
  {NC, NC, NC, NC},/*(53)*/
- {NC, NC, NC, NC},/*(54) [*/
- {_K, SS, NC, NC},/*(55) +  SS+K*/
+ {NC, NC, NC, NC},/*(54) [ */
+ {_K, SS, NC, NC},/*(55) +  SS+K */
  {NC, NC, NC, NC},/*(56)*/
  {SS, NC, NC, NC},/*(57) F23 SHIFT / SS ZX  */
  {_2, CS, NC, NC},/*(58) Caps Lock  CS+2*/ // CAPS
  {CS, NC, NC, NC},/*(59) Casp Shift*/
- {EN, NC, EN, NC},/*(5A) Enter*/  /*E0 5A {EN, NC} Keypad Enter */
- {_L, SS, NC, NC},/*(5B) SS+L*/ // ]	
+ {EN, NC, EN, NC},/*(5A) Enter */  /*E0 5A {EN, NC} Keypad Enter */
+ {_L, SS, NC, NC},/*(5B) SS+L */ // ]	
  {NC, NC, NC, NC},/*(5C)*/
  {NC, NC, NC, NC},/*(5D) \ */ /* BACKSLASH 5D {NC, NC} `*/ // EUROPE_1
  {NC, NC, NC, NC},/*(5E)*/

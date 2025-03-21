@@ -50,57 +50,90 @@ typedef uint64_t u64;
 
 #define KBD_BUFFER_SIZE 16
 
+enum MT8816_Y
+{
+	D0 = 0 << 4,
+	D1 = 1 << 4,
+	D2 = 2 << 4,
+	D3 = 3 << 4,
+	D4 = 4 << 4
+};
+
+enum CMT8816_X
+{
+	KA8  = 7,
+	KA9  = 6,
+	KA10 = 5,
+	KA11 = 4,
+	KA12 = 3,
+	KA13 = 2,
+	KA14 = 1,
+	KA15 = 0
+};
+
+ //----------------------------------------------------------
+ // Keytable   AX0 AX1 AX2 AX3 AY0 AY1 AY2
+ //         
+ //   
+ // pent   Y0  Y1  Y2  Y4  Y3  Y3  Y4  Y2  Y1  Y0
+ //        D0  D1  D2  D3  D4  D4  D3  D2  D1  D0
+ // X7 KA11 1   2   3   4   5  6   7   8   9   0   KA12 X3
+ // X6 KA10 Q   W   E   R   T  Y   U   I   O   P   KA13 X2
+ // X5 KA9  A   S   D   F   G  H   J   K   L   EN  KA14 X1
+ // X4 KA8 CS   Z   X   C   V  B   N   M   SS  SP  KA15 X0
+
+//ZX_KEY_CS  = D0 | KA8,
 
 extern const enum zx_key{
     NC=0xFF,
     //      ряд X0
-    SP=0x00, //SPACE
-    SS=0x10, //SYMBOL SHIFT
-    _M=0x20,
-    _N=0x40,
-    _B=0x30,
+    SP= D0 | KA15, //SPACE
+    SS= D1 | KA15, //SYMBOL SHIFT
+    _M= D2 | KA15,
+    _N= D4 | KA15,
+    _B= D3 | KA15,
     //      ряд X1
-    EN=0x01, // ENTER
-    _L=0x11,
-    _K=0x21,
-    _J=0x41,
-    _H=0x31,
+    EN= D0 | KA14, // ENTER
+    _L= D1 | KA14,
+    _K= D2 | KA14,
+    _J= D4 | KA14,
+    _H= D3 | KA14,
     //      ряд X2
-    _P=0x02,
-    _O=0x12,
-    _I=0x22,
-    _U=0x42,
-    _Y=0x32,
+    _P= D0 | KA13,
+    _O= D1 | KA13,
+    _I= D2 | KA13,
+    _U= D4 | KA13,
+    _Y= D3 | KA13,
     //      ряд X3
-    _0=0x03,
-    _9=0x13,
-    _8=0x23,
-    _7=0x43,
-    _6=0x33,
+    _0= D0 | KA12,
+    _9= D1 | KA12,
+    _8= D2 | KA12,
+    _7= D4 | KA12,
+    _6= D3 | KA12,
     //      ряд X4    
-    CS=0x04, //CAPS SHIFT
-    _Z=0x14,
-    _X=0x24,
-    _C=0x44,
-    _V=0x34,
+    CS= D0 | KA8, //CAPS SHIFT
+    _Z= D1 | KA8,
+    _X= D2 | KA8,
+    _C= D4 | KA8,
+    _V= D3 | KA8,
     //      ряд X5
-    _A=0x05,
-    _S=0x15,
-    _D=0x25,
-    _F=0x45,
-    _G=0x35,   
+    _A= D0 | KA9,
+    _S= D1 | KA9,
+    _D= D2 | KA9,
+    _F= D4 | KA9,
+    _G= D3 | KA9,   
     //      ряд X6
-    _Q=0x06,
-    _W=0x16,
-    _E=0x26,
-    _R=0x46,
-    _T=0x36,
+    _Q= D0 | KA10,
+    _W= D1 | KA10,
+    _E= D2 | KA10,
+    _R= D4 | KA10,
+    _T= D3 | KA10,
     //      ряд X7
-    _1=0x07,
-    _2=0x17,
-    _3=0x27,
-    _4=0x47,
-    _5=0x37
+    _1= D0 | KA11,
+    _2= D1 | KA11,
+    _3= D2 | KA11,
+    _4= D4 | KA11,
+    _5= D3 | KA11
 } zx_key_pent;
 
 
