@@ -82,8 +82,6 @@ enum CMT8816_X
  // X5 KA9  A   S   D   F   G  H   J   K   L   EN  KA14 X1
  // X4 KA8 CS   Z   X   C   V  B   N   M   SS  SP  KA15 X0
 
-//ZX_KEY_CS  = D0 | KA8,
-
 extern const enum zx_key{
     NC=0xFF,
     //      ряд X0
