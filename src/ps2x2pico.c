@@ -31,7 +31,7 @@
 #include "pio_usb.h"
 #include "hardware/clocks.h"
 #include "pico/stdlib.h"
-
+#include "usbfs.h"
 
 // core1: handle host events
 void core1_main() {
@@ -50,14 +50,17 @@ void core1_main() {
   // To run USB SOF interrupt in core1, init host stack for pio_usb (roothub
   // port1) on core1
   tuh_init(1);
+  sleep_ms(10);
+  tud_init(0);
+  usbfs_init();
 
   while (true) {
     tuh_task(); // tinyusb host task
+    usbfs_update();
   }
 }
 
 int main() {
-  sleep_ms(10);
   set_sys_clock_khz(240000, true);
   board_init();
   stdio_init_all();
@@ -67,6 +70,7 @@ int main() {
    // all USB task run in core1
   multicore_reset_core1(); 
   multicore_launch_core1(core1_main);
+ 
 
   gpio_init(LEDPIN);
   gpio_set_dir(LEDPIN, GPIO_OUT);
@@ -82,6 +86,7 @@ int main() {
   while(1) {
     
     kb_task();
+    
     //ms_task();
   }
 }
