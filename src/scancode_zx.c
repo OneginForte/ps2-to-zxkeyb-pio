@@ -144,16 +144,16 @@ void keyboard_task(ps2out* this)
 			break;
             //Add send macro void kb_send_sc_list(const u8 *list)
         case 0x05:
-            kb_send_sc_list(macro1);
+            //kb_send_sc_list(macro1);
 			break;
         case 0x06:
-            kb_send_sc_list(macro2);
+            //kb_send_sc_list(macro2);
 			break;
         case 0x04:
-            kb_send_sc_list(macro3);
+            //kb_send_sc_list(macro3);
 			break;
         case 0x0C:
-            kb_send_sc_list(macro4);
+            //kb_send_sc_list(macro4);
 			break;
 /*
 E 	    24 	    F0,24 	    F1 	    05 	    F0,05

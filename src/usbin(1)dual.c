@@ -97,6 +97,7 @@ struct {
   hid_report_info_t report_info[MAX_REPORT];
 } hid_info[CFG_TUH_HID];
 
+
 bool hid_parse_find_bit_item_by_page(hid_report_info_t* report_info_arr, u8 type, u16 page, u8 bit, const hid_report_item_t **item) {
   for(u8 i = 0; i < report_info_arr->num_items; i++) {
     if(report_info_arr->item[i].item_type == type && report_info_arr->item[i].attributes.usage.page == page) {

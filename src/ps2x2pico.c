@@ -36,8 +36,8 @@
 // core1: handle host events
 void core1_main() {
   sleep_ms(10);
-  tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT);
-  tuh_init(0);
+  //tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT);
+  //tuh_init(0);
 
   //pio_usb_host_add_port(21, PIO_USB_PINOUT_DPDM);
 
@@ -53,7 +53,7 @@ void core1_main() {
   sleep_ms(10);
   tud_init(0);
   usbfs_init();
-
+  
   while (true) {
     tuh_task(); // tinyusb host task
     usbfs_update();

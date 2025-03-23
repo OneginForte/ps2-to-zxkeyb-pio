@@ -42,7 +42,7 @@
 #endif
 
 #define CFG_TUD_ENABLED       1
-#define CFG_TUSB_DEBUG        0
+#define CFG_TUSB_DEBUG        1
 // Enable Host stack
 #define CFG_TUH_ENABLED       1
 #define CFG_TUH_RPI_PIO_USB   1
@@ -90,9 +90,9 @@
 #define CFG_TUH_ENUMERATION_BUFSIZE 256
 
 #define CFG_TUH_HUB                 2
-#define CFG_TUH_DEVICE_MAX          6
+#define CFG_TUH_DEVICE_MAX          2
 
-#define CFG_TUH_HID                 16
+#define CFG_TUH_HID                 4
 #define CFG_TUH_HID_EPIN_BUFSIZE    128 // default 64
 #define CFG_TUH_HID_EPOUT_BUFSIZE   128 // default 64
 

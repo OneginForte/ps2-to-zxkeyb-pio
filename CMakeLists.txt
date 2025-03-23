@@ -5,9 +5,9 @@ if(WIN32)
 else()
     set(USERHOME $ENV{HOME})
 endif()
-set(sdkVersion 2.0.0)
-set(toolchainVersion 13_2_Rel1)
-set(picotoolVersion 2.0.0)
+set(sdkVersion 2.1.1)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.1.1)
 set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 if (EXISTS ${picoVscode})
     include(${picoVscode})
@@ -28,8 +28,8 @@ add_compile_definitions(DEBUG=1)
 # Pull in Raspberry Pi Pico SDK
 include(pico_sdk_import.cmake)
 
-if (NOT PICO_SDK_VERSION_STRING VERSION_LESS "2.1.0")
-  message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.5.1 required. Your version is ${PICO_SDK_VERSION_STRING}")
+if (NOT PICO_SDK_VERSION_STRING VERSION_LESS "2.2.1")
+  message(FATAL_ERROR "Raspberry Pi Pico SDK version 2.0.0 required. Your version is ${PICO_SDK_VERSION_STRING}")
 endif()
 
 project(ps2x2pico C CXX ASM)
@@ -43,8 +43,8 @@ pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2out.pio)
 pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
 
 # print memory usage, enable all warnings
-target_link_options(ps2x2pico PRIVATE -Xlinker --print-memory-usage)
 target_compile_options(ps2x2pico PRIVATE -Wall -Wextra)
+target_link_options(ps2x2pico PRIVATE -Xlinker --print-memory-usage --data-sections)
 
 target_sources(ps2x2pico PRIVATE
  # can use 'tinyusb_pico_pio_usb' library later when pico-sdk is updated
