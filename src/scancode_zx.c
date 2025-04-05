@@ -52,7 +52,7 @@ void key_on(uint8_t code) // клавиша нажата
                 SetAddr(table_key_zx_ps[code][2]);// адрес клавиши zx 
                 SetKey(1);//нажатие клавиши
 
-                printf( "Key E0 ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
+                printf( "Key E0 ON: 0x%02X 0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
             }
             else { 
                 if ((table_key_zx_ps[code][0]==NC)||((tab_key[code]&0x0f)==0x0f)) return;// если на код нет нажатия клавиши ZX или уже нажата
@@ -67,7 +67,7 @@ void key_on(uint8_t code) // клавиша нажата
                 SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
                 SetKey(1);//нажатие клавиши
 
-                printf( "Key ON: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
+                printf( "Key ON: 0x%02X 0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
             }
          
 }
@@ -90,7 +90,7 @@ void key_off(uint8_t code)// клавиша отпущена
                 SetAddr(table_key_zx_ps[code][2]);// адрес клавиши zx 
                 SetKey(0);//нажатие клавиши
 
-                printf( "Key E0 OFF: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
+                printf( "Key E0 OFF: 0x%02X 0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][2], table_key_zx_ps[code][3], tab_key[code]);
             }
             else { 
                 if (table_key_zx_ps[code][0]==NC)return;// если на код нет нажатия клавиши ZX
@@ -105,12 +105,20 @@ void key_off(uint8_t code)// клавиша отпущена
                 SetAddr(table_key_zx_ps[code][0]);// адрес клавиши zx 
                 SetKey(0);//нажатие клавиши
 
-                printf( "Key OFF: 0x%02X  0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
+                printf( "Key OFF: 0x%02X 0x%02X 0x%02X 0x%02X \r\n", code, table_key_zx_ps[code][0], table_key_zx_ps[code][1], tab_key[code]);
             }
 
             
 }
 
+// sends out scan codes from a null byte terminated list
+void kb_send_macro_list(const u8 *list) {
+    key2repeat = 0;
+    printf("Send macro");
+    for(int i = 0; list[i]; i++) {
+      kb_send(list[i]);
+    }
+  }
 
 //----------------------------------------------------------------------------
 void keyboard_task(ps2out* this)
@@ -144,16 +152,20 @@ void keyboard_task(ps2out* this)
 			break;
             //Add send macro void kb_send_sc_list(const u8 *list)
         case 0x05:
-            //kb_send_sc_list(macro1);
+            if (flag_f0 == false) kb_send_macro_list(macro1);
+                else flag_f0 = false;
 			break;
         case 0x06:
-            //kb_send_sc_list(macro2);
+            if (flag_f0 == false) kb_send_macro_list(macro2);
+                else flag_f0 = false;
 			break;
         case 0x04:
-            //kb_send_sc_list(macro3);
+            if (flag_f0 == false) kb_send_macro_list(macro3);
+                else flag_f0 = false;
 			break;
         case 0x0C:
-            //kb_send_sc_list(macro4);
+            if (flag_f0 == false) kb_send_macro_list(macro4);
+                else flag_f0 = false;
 			break;
 /*
 E 	    24 	    F0,24 	    F1 	    05 	    F0,05

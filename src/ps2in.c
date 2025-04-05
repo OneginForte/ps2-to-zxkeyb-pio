@@ -93,7 +93,7 @@ void ps2in_task(ps2in* this, ps2out* out) {
         
         if(ps2in_msi == 4) {
           ps2in_msi = 0;
-          ms_send_movement(ps2in_msb[0] & 0x7, ps2in_msb[1], 0x100 - ps2in_msb[2], 0x100 - ps2in_msb[3]);
+          //ms_send_movement(ps2in_msb[0] & 0x7, ps2in_msb[1], 0x100 - ps2in_msb[2], 0x100 - ps2in_msb[3]);
         }
         
       } else {

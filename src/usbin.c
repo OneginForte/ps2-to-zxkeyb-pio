@@ -418,7 +418,7 @@ void ms_report_receive(u8 const* report, u16 len) {
   y = to_signed_value8(items->y, report, len);
   z = to_signed_value8(items->z, report, len);
 
-  ms_send_movement(buttons, x, y, z);
+  //ms_send_movement(buttons, x, y, z);
 }
 
 void kb_report_receive(u8 modifiers, u8 const* report, u16 len) {
@@ -581,11 +581,11 @@ void tuh_hid_report_received_cb(u8 dev_addr, u8 instance, u8 const* report, u16 
   if(tuh_hid_interface_protocol(dev_addr, instance) == HID_ITF_PROTOCOL_MOUSE) {
 
     if(tuh_hid_get_protocol(dev_addr, instance) == HID_PROTOCOL_BOOT) {
-      ms_send_movement(report[0], report[1], report[2], report[3]);
+      //ms_send_movement(report[0], report[1], report[2], report[3]);
 
     } else if(rpt_info->usage_page == HID_USAGE_PAGE_DESKTOP && rpt_info->usage == HID_USAGE_DESKTOP_MOUSE) {
-      ms_setup(rpt_info);
-      ms_report_receive(report, len);
+      //ms_setup(rpt_info);
+      //ms_report_receive(report, len);
 
     } else {
       printf("mouse unknown  usage_page: %02x  usage: %02x\n", rpt_info->usage_page, rpt_info->usage);

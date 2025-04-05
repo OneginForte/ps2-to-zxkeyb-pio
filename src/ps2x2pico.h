@@ -2,7 +2,8 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2024 No0ne (https://github.com/No0ne)
+ * Copyright (c) 2025 OneginForte
+ *           (c) 2024 No0ne (https://github.com/No0ne)
  *           (c) 2023 Dustin Hoffman
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -134,7 +135,7 @@ extern const enum zx_key{
     _5= D3 | KA11
 } zx_key_pent;
 
-
+extern u8 key2repeat;
 void scancode_s(uint8_t code);
 void key_on(uint8_t code); // клавиша нажата
 void key_off(uint8_t code);// клавиша отпущена  
@@ -243,20 +244,20 @@ enum
 #define bit(b) (1UL << (b))
 // макросы end
 
+extern void kb_send(u8 byte);
 
-extern uint8_t const macro1[]; 
-extern uint8_t const macro2[]; 
-extern uint8_t const macro3[]; 
-extern uint8_t const macro4[]; 
-extern uint8_t const macro5[];
-extern uint8_t const macro6[]; 
-extern uint8_t const macro7[];
-extern uint8_t const macro8[];
-extern uint8_t const macro9[];
-extern uint8_t const macro10[];
-extern uint8_t const macro11[];
-extern uint8_t const macro12[];
-
+extern u8 const macro1[]; 
+extern u8 const macro2[]; 
+extern u8 const macro3[]; 
+extern u8 const macro4[]; 
+extern u8 const macro5[];
+extern u8 const macro6[]; 
+extern u8 const macro7[];
+extern u8 const macro8[];
+extern u8 const macro9[];
+extern u8 const macro10[];
+extern u8 const macro11[];
+extern u8 const macro12[];
 
 extern uint8_t const ext_code_keys_1_2[]; // keys in this list need to have KB_EXT_PFX_E0 sent before their actual code
 extern uint8_t const ext_code_modifier_keys_1_2[]; // keys in this list need to have KB_EXT_PFX_E0 sent before their actual code

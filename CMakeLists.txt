@@ -37,13 +37,28 @@ project(ps2x2pico C CXX ASM)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
-add_executable(ps2x2pico src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2ms.c src/ps2in.c)
+add_executable(ps2x2pico src/ps2x2pico.c src/usbin.c src/scancodes.c src/scancode_zx.c src/ps2kb.c src/ps2in.c)
 
-pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2out.pio)
 pico_generate_pio_header(ps2x2pico ${CMAKE_CURRENT_LIST_DIR}/src/ps2in.pio)
 
 # print memory usage, enable all warnings
 target_compile_options(ps2x2pico PRIVATE -Wall -Wextra)
+
+add_compile_options(
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+    -fno-exceptions 
+    -fno-check-new 
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-enforce-eh-specs>
+    -g 
+    -ffunction-sections 
+    -fdata-sections 
+    -O3
+    -funroll-loops 
+    -Werror 
+    -Wall
+)
+
+
 target_link_options(ps2x2pico PRIVATE -Xlinker --print-memory-usage --data-sections)
 
 target_sources(ps2x2pico PRIVATE
@@ -52,15 +67,8 @@ target_sources(ps2x2pico PRIVATE
  )
 target_compile_definitions(ps2x2pico PRIVATE PIO_USB_USE_TINYUSB)
 
-### PS/2 output
-#add_compile_definitions(LVOUT=13) # Level shifter pull-up voltage
-#add_compile_definitions(KBOUT=11) # Keyboard data GPIO11, clock is GPIO12
-#add_compile_definitions(MSOUT=14) # Mouse data GPIO14, clock is GPIO15
-
 ### PS/2 input
-#add_compile_definitions(LVIN=6) # Level shifter pull-up voltage
 add_compile_definitions(KBIN=2) # Keyboard data GPIO3, clock pin is GPIO4
-add_compile_definitions(MSIN=18) # Mouse data GPIO6, clock pin is GPIO7
 add_compile_definitions(PICO_DEFAULT_UART_TX_PIN=16)
 add_compile_definitions(PICO_DEFAULT_UART_RX_PIN=17)
 

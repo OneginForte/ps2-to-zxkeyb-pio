@@ -1,7 +1,8 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2024 No0ne (https://github.com/No0ne)
+ * Copyright (c) 2025 OneginForte
+ *           (c) 2024 No0ne (https://github.com/No0ne)
  *           (c) 2023 Dustin Hoffman
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -38,7 +39,7 @@ void core1_main() {
   sleep_ms(10);
   //tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT);
   //tuh_init(0);
-
+  tud_init(0);
   //pio_usb_host_add_port(21, PIO_USB_PINOUT_DPDM);
 
   // Use tuh_configure() to pass pio configuration to the host stack
@@ -51,7 +52,7 @@ void core1_main() {
   // port1) on core1
   tuh_init(1);
   sleep_ms(10);
-  tud_init(0);
+ 
   usbfs_init();
   
   while (true) {
@@ -71,23 +72,19 @@ int main() {
   multicore_reset_core1(); 
   multicore_launch_core1(core1_main);
  
-
   gpio_init(LEDPIN);
   gpio_set_dir(LEDPIN, GPIO_OUT);
   
-  //memset(ps2buffer, 0, KBD_BUFFER_SIZE);
   //nespad_begin(clock_get_hz(clk_sys) / 1000, NES_GPIO_CLK, NES_GPIO_DATA, NES_GPIO_LAT);
   
   //init_74hc595();
 
-  kb_init(KBIN); //KBIN);
-  //ms_init(MSIN); //MSIN);
+  kb_init(KBIN);
 
   while(1) {
     
     kb_task();
     
-    //ms_task();
   }
 }
 

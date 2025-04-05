@@ -338,16 +338,14 @@ void kb_send_key(u8 key, bool is_key_pressed, u8 modifiers) {
 }
 
 bool kb_task() {
-  keyboard_task(&kb_out);
-  //#ifdef KBIN
+  
   ps2in_task(&kb_in, &kb_out);
-  //#endif
+  keyboard_task(&kb_out);
+
   return kb_enabled;// TODO: return value can probably be void
 }
 
 void kb_init(u8 gpio_in) {
-  //ps2out_init(&kb_out, &kb_receive);
-  //#ifdef KBIN
   /*инициализация пинов пико для управления 8816 по порядку
   AX0 первый 11 штук */
   for (size_t i = 0; i < 11; i++)
@@ -376,7 +374,7 @@ void kb_init(u8 gpio_in) {
   //gpio_put(CSMT, 1); //выбор чипа
 
   queue_init(&kb_out.qbytes, sizeof(u8), 9);
-  //queue_init(&kb_out.qpacks, sizeof(u8) * 9, 16);
+
 
   ps2in_init(&kb_in, pio1, gpio_in);
   //#else
